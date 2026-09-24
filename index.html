@@ -201,6 +201,7 @@ section.view{display:none} section.view.on{display:block}
     <div class="picks">
       <h2>Right now she's…</h2>
       <div class="moods" id="moods"></div>
+      <p class="small" id="fedNote" hidden style="margin:0 0 8px;font-weight:700">Keep her upright and calm for 20–30 minutes after a bottle: on your lap or held.</p>
       <div class="pick-list" id="pickList"></div>
       <div class="row-end">
         <button class="linkbtn" id="shuffle" type="button">Show me others</button>
@@ -227,7 +228,7 @@ section.view{display:none} section.view.on{display:block}
     <input class="search" id="q" type="search" placeholder="Search ideas or supplies" aria-label="Search ideas">
     <div class="chips" id="typeChips" role="group" aria-label="Filter by type"></div>
     <div id="skillBanner"></div>
-    <label class="toggle"><input type="checkbox" id="showAll"> Also show ideas for later and ones she's outgrown</label>
+    <label class="toggle"><input type="checkbox" id="showAll"> Also show ideas for later</label>
     <div class="count" id="ideaCount"></div>
     <div id="ideaList"></div>
   </section>
@@ -308,7 +309,7 @@ section.view{display:none} section.view.on{display:block}
      h (handling: adult | help | hers),
      needs [skills she must have], min (usual months, soft), out (skill that outgrows it),
      builds [skills it works toward], sum, how [steps],
-     easier, next {t, needs}, go (keep going), stop (stop or simplify),
+     easier, next {t, needs}, go (keep going), stop (stop or simplify), fed (upright version after a feed),
      kit [supply ids], safety, why, src [source ids]
    ===================================================================== */
 const VERSION = "Ideas for about 0\u201312 months. Content updated September 2026.";
@@ -324,7 +325,8 @@ const SOURCES = {
   dogs:{l:"Nationwide Children's: Pets and children", u:"https://www.nationwidechildrens.org/family-resources-education/700childrens/2018/08/pets-and-children-keeping-kids-safe-when-animals-are-in-the-home"},
   noise:{l:"American Academy of Audiology: Babies and loud events", u:"https://www.audiology.org/can-you-or-should-you-bring-a-baby-to-a-concert/"},
   screens:{l:"KidsHealth: Screen time for babies (video chat)", u:"https://kidshealth.org/ChildrensMercy/en/parents/screentime-baby-todd.html?view=ptr"},
-  hunger:{l:"CDC: Signs your child is hungry or full", u:"https://www.cdc.gov/infant-toddler-nutrition/mealtime/signs-your-child-is-hungry-or-full.html"}
+  hunger:{l:"CDC: Signs your child is hungry or full", u:"https://www.cdc.gov/infant-toddler-nutrition/mealtime/signs-your-child-is-hungry-or-full.html"},
+  fountains:{l:"CDC: Splash pads and decorative fountains", u:"https://www.cdc.gov/healthy-swimming/toolkit/operating-public-pools-hot-tubs-and-splash-pads.html"}
 };
 
 const TYPES = {
@@ -435,7 +437,7 @@ const IDEAS = [
    sum:"A favorite toy placed just beyond her fingertips",
    how:["On her tummy, set a favorite toy a few inches past her reach.","Cheer her on as she wiggles, pivots and inches toward it.","Hand it over after a real effort, before she gets frustrated."],
    easier:"Put it close enough that she wins in a few seconds.",
-   next:{t:"Each time she gets close, move it a couple of inches further.", needs:["straightarms"]},
+   next:{t:"Let her get it every time, then start the next turn a little further away.", needs:["straightarms"]},
    go:"Scooting, pivoting, reaching, focused face.", stop:"Crying at the toy instead of working toward it. Give it to her and switch activities.",
    kit:["oball"], why:"This is early crawling practice: pushing, pivoting and scooting toward a goal.", src:["cdc6"]},
   {id:"side-reach", t:"Side-lying reach", type:"move", mood:["calm","wiggly"], mins:"2\u20134 min", h:"help", min:2, needs:["head"], out:"roll", builds:["roll","transfer"],
@@ -491,7 +493,7 @@ const IDEAS = [
    go:"Straightening her legs, bouncing, grinning.", stop:"Legs fold and stay folded, or she fusses. Sit her down.",
    kit:[], safety:"Keep your hands around her chest the whole time. Gentle bouncing only.",
    why:"She loves it, and it builds leg strength for standing later.", src:["cdc6"]},
-  {id:"sit-reach", t:"Sit and reach", type:"move", mood:["calm","wiggly","fed"], mins:"3\u20135 min", h:"help", min:4, needs:["head","sitsup"], out:"sits", builds:["sits"],
+  {id:"sit-reach", t:"Sit and reach", type:"move", mood:["calm","wiggly","fed"], mins:"3\u20135 min", h:"help", min:4, needs:["head","sitsup"], out:"sits", builds:["sits"], fed:"Hold her upright and steady at the hips; offer toys straight ahead, no leaning or wobbling.",
    sum:"Supported sitting with toys offered off to the side",
    how:["Sit her in the U of your crossed legs, or on your lap facing out.","Offer toys slightly to each side and a little high.","Let her reach, wobble and rebalance. Catch her if she tips."],
    easier:"Hold her more firmly at the hips and offer toys straight ahead.",
@@ -547,7 +549,7 @@ const IDEAS = [
    why:"Walking steps with support she controls herself.", src:[]},
 
   // ---------------- HANDS ----------------
-  {id:"hand-off", t:"The hand-off", type:"hands", mood:["calm","fed"], mins:"3\u20135 min", h:"hers", min:4, needs:["grabs"], out:"transfer", builds:["transfer"],
+  {id:"hand-off", t:"The hand-off", type:"hands", mood:["calm","fed"], mins:"3\u20135 min", h:"hers", min:4, needs:["grabs"], out:"transfer", builds:["transfer"], fed:"Sitting upright on your lap, well supported.",
    sum:"Offer a second toy to the hand that's already full",
    how:["When she's holding a toy, offer another one to the same hand.","She has to switch hands or drop the first to take it.","Try from both sides."],
    easier:"Offer an easy-grip ball at her chest so both hands grab it together.",
@@ -582,7 +584,7 @@ const IDEAS = [
    sum:"Scarves stuffed in a tissue box to pull out",
    how:["Stuff play scarves into an empty tissue box (plastic slot insert removed).","Hold the box and let her grab and pull them out one by one.","Play peekaboo with one when she's done."],
    easier:"Leave a corner of each scarf sticking well out.",
-   next:{t:"Tie two scarves end to end so one pull brings out a long chain.", needs:["pincer"]},
+   next:{t:"Use scarves in different colors and name each one as it comes out."},
    go:"Pulling, surprised face, reaching for the next.", stop:"Losing interest or mouthing the box. Put it away.",
    kit:["scarfbox","scarves"], safety:"You hold the box. Scarves are never around her neck, and they go away after play.",
    why:"Grabbing, pulling, and surprise all at once.", src:["strings"]},
@@ -626,7 +628,7 @@ const IDEAS = [
    why:"Problem solving: she has to figure out the lid.", src:[]},
 
   // ---------------- SENSES ----------------
-  {id:"texture-tour", t:"House texture tour", type:"senses", mood:["calm","fussy","fed"], mins:"4\u20138 min", h:"help", min:0, needs:[],
+  {id:"texture-tour", t:"House texture tour", type:"senses", mood:["calm","fussy","fed"], mins:"4\u20138 min", h:"help", min:0, needs:[], fed:"Carry her upright, moving slowly; no swooping.",
    sum:"Carry her room to room, touching different surfaces",
    how:["Carry her through the house and touch her hand to different surfaces.","Cool window glass, a fuzzy rug, a smooth fridge, a leafy plant, a soft towel.","Name each one: \u201cCold. Fuzzy. Smooth.\u201d"],
    easier:"Two textures only, back and forth.",
@@ -634,7 +636,7 @@ const IDEAS = [
    go:"Opening her hand, looking at what she's touching.", stop:"Pulling her hand back repeatedly. She's had enough.",
    kit:[], safety:"Skip anything hot, sharp, dusty or with cords. Hands only, not mouth.",
    why:"Every texture is new information, and she's hearing words for how things feel.", src:[]},
-  {id:"foot-feel", t:"Foot feel", type:"senses", mood:["calm","fed"], mins:"2\u20134 min", h:"help", min:2, needs:[],
+  {id:"foot-feel", t:"Foot feel", type:"senses", mood:["calm","fed"], mins:"2\u20134 min", h:"help", min:2, needs:[], fed:"Keep her upright on your lap and bring the textures to her feet; no lying back.",
    sum:"Different textures against the soles of her feet",
    how:["With her on your lap or on her back, take off her socks.","Hold different things to her soles: a dry washcloth, a damp one, a silicone spatula, a soft sweater, your palm.","Name each one and watch her toes curl."],
    easier:"Just one texture, pressed gently and held still.",
@@ -645,9 +647,9 @@ const IDEAS = [
    sum:"A warm washcloth, then a cool one",
    how:["Wet two washcloths: one warm, one cool.","Touch one to her hands and feet, then the other.","Say \u201cWarm\u201d and \u201cCool\u201d each time."],
    easier:"Only the cool one, briefly.",
-   next:{t:"An ice cube wrapped in a thin washcloth, touched to her palm for a second or two."},
+   next:{t:"Add a third feeling: a teether chilled in the fridge, touched to her palm."},
    go:"Surprised face, reaching for it again.", stop:"Pulling away or crying. Warm her hands and stop.",
-   kit:["washcloth"], safety:"Test the warm one on your inner wrist first. Ice stays wrapped and in your hand.",
+   kit:["washcloth","teether"], safety:"Test the warm one on your inner wrist first.",
    why:"Temperature is a whole sense she barely uses yet.", src:[]},
   {id:"smell-garden", t:"Smell garden", type:"senses", mood:["calm","fed"], mins:"2\u20134 min", h:"adult", min:3, needs:[],
    sum:"Hold herbs, peels and spices near her nose",
@@ -681,7 +683,7 @@ const IDEAS = [
    go:"Watching the ribbons, blinking at the breeze, smiling.", stop:"Fussing or squinting at the air.",
    kit:["fan"], safety:"Fan stays stable and out of her reach. Ribbons stay on the fan, under 7 inches, never near her.",
    why:"A feeling she can't see, and motion she can watch.", src:["strings"]},
-  {id:"crinkle", t:"Crinkle, pause, crinkle", type:"senses", mood:["calm","wiggly","fed"], mins:"3\u20135 min", h:"help", min:3, needs:[],
+  {id:"crinkle", t:"Crinkle, pause, crinkle", type:"senses", mood:["calm","wiggly","fed"], mins:"3\u20135 min", h:"help", min:3, needs:[], fed:"Upright on your lap, crinkling in front of her.",
    sum:"A crinkly sound, a pause, and then again",
    how:["Crinkle a sheet of paper near her, then stop.","Wait until she looks for the sound, then crinkle again.","Offer her a sewn crinkle toy to squeeze herself."],
    easier:"Crinkle right in front of her so she sees it and hears it.",
@@ -689,7 +691,7 @@ const IDEAS = [
    go:"Stilling when you pause, turning to the sound.", stop:"Startling or blinking hard. Make it softer.",
    kit:["crinkle"], safety:"The paper stays in your hands. Wet or torn paper is a choking hazard.",
    why:"Listening, waiting, and anticipating what comes next.", src:["choking"]},
-  {id:"fabric-feel", t:"Big fabric squares", type:"senses", mood:["calm","fed"], mins:"3\u20135 min", h:"hers", min:3, needs:["grabs"],
+  {id:"fabric-feel", t:"Big fabric squares", type:"senses", mood:["calm","fed"], mins:"3\u20135 min", h:"hers", min:3, needs:["grabs"], fed:"Upright on your lap; offer one square at a time.",
    sum:"Different fabrics to touch, crumple and mouth",
    how:["Offer one square at a time: velvet, fleece, cotton, corduroy.","Name how each feels.","Rub one gently on her cheek, arms and feet."],
    easier:"Rub the fabric on her hand; she doesn't have to hold it.",
@@ -728,7 +730,7 @@ const IDEAS = [
    next:{t:"Turn it upside down as a drum.", needs:["bang"]},
    go:"Staring, smiling, patting.", stop:"Startling at the ring. Stop tapping.",
    kit:["bowl"], why:"Reflections and sounds from one ordinary object.", src:[]},
-  {id:"picture-gallery", t:"Picture gallery", type:"senses", mood:["calm","fed"], mins:"2\u20134 min", h:"adult", min:0, needs:[],
+  {id:"picture-gallery", t:"Picture gallery", type:"senses", mood:["calm","fed"], mins:"2\u20134 min", h:"adult", min:0, needs:[], fed:"Hold her upright on your lap and show the cards in front of her.",
    sum:"Bold picture cards held where she can see them",
    how:["Draw bold stripes, a bullseye and a simple face with a thick marker.","Hold a card 8\u201312 inches from her face.","Show two at once and notice which she looks at longer."],
    easier:"One card, held still.",
@@ -736,7 +738,7 @@ const IDEAS = [
    go:"Long, steady looking.", stop:"Looking away or yawning. Put the cards away.",
    kit:["cards"], safety:"The cards stay in your hands. Let the ink dry, and keep the marker capped and away.",
    why:"Strong contrast holds her attention and gives her eyes practice.", src:[]},
-  {id:"follow-toy", t:"Follow the toy", type:"senses", mood:["calm","fed"], mins:"2\u20133 min", h:"adult", min:0, needs:[],
+  {id:"follow-toy", t:"Follow the toy", type:"senses", mood:["calm","fed"], mins:"2\u20133 min", h:"adult", min:0, needs:[], fed:"Hold her upright in your arm or on your lap while the toy moves.",
    sum:"Move a bright toy slowly and let her track it",
    how:["Hold a bright toy 8\u201312 inches from her face.","Move it slowly side to side, then up and down.","Stop in the middle and let her catch up."],
    easier:"Move it only a little, very slowly.",
@@ -745,7 +747,7 @@ const IDEAS = [
    kit:["rattles"], why:"Tracking a moving object is visual practice for everything that comes later.", src:[]},
 
   // ---------------- SOUND & MUSIC ----------------
-  {id:"world-music", t:"Music around the world", type:"sound", mood:["wiggly","calm","fed"], mins:"5\u201315 min", h:"adult", min:0, needs:[],
+  {id:"world-music", t:"Music around the world", type:"sound", mood:["wiggly","calm","fed"], mins:"5\u201315 min", h:"adult", min:0, needs:[], fed:"Hold her upright and sway slowly; no bouncing.",
    sum:"A different style of music each day",
    how:["Pick a style for the day: salsa, classical, reggae, bluegrass, mariachi, jazz, West African drumming, Bollywood.","Play it while you play. Dance with her to the fast ones.","Repeat the ones she loves."],
    easier:"One quiet song while you hold her.",
@@ -768,14 +770,14 @@ const IDEAS = [
    next:{t:"Stop mid-line and wait. See if she makes a sound to fill the gap."},
    go:"Stilling, smiling, cooing back.", stop:"Startling at the big voice. Stay soft.",
    kit:[], why:"She notices contrast, and your voice is her favorite sound.", src:[]},
-  {id:"tap-pause", t:"Tap, pause, tap", type:"sound", mood:["calm","fussy","fed"], mins:"2\u20134 min", h:"help", min:0, needs:[],
+  {id:"tap-pause", t:"Tap, pause, tap", type:"sound", mood:["calm","fussy","fed"], mins:"2\u20134 min", h:"help", min:0, needs:[], fed:"Upright on your lap: tap her back, hands and knees, not her tummy.",
    sum:"Gentle rhythms tapped on her tummy, feet and hands",
    how:["Tap a slow rhythm on her tummy while you chant.","Pause. Wait a beat. Tap again.","Move to her feet, knees and hands."],
    easier:"Slow, steady pats, no pauses.",
    next:{t:"Use the same rhythm every time and see if she anticipates the next tap."},
    go:"Stilling in the pause, wriggling for more.", stop:"Pulling away. Switch to holding her.",
    kit:[], why:"Rhythm she can feel, and the fun of waiting for what comes next.", src:[]},
-  {id:"body-parts", t:"Body-parts song", type:"sound", mood:["calm","fed"], mins:"3\u20134 min", h:"help", min:2, needs:[], builds:["words"],
+  {id:"body-parts", t:"Body-parts song", type:"sound", mood:["calm","fed"], mins:"3\u20134 min", h:"help", min:2, needs:[], builds:["words"], fed:"Upright on your lap; skip tummy touches and tickles.",
    sum:"Sing and touch her nose, toes, tummy and hands",
    how:["Sing a simple tune and gently touch each part as you name it: nose, toes, tummy, hands.","Do This Little Piggy on her toes.","Walk your fingers up her arm like a spider."],
    easier:"Just one part, repeated: \u201cToes, toes, toes.\u201d",
@@ -813,7 +815,7 @@ const IDEAS = [
    next:{t:"Narrate what she's looking at, not just what you're doing."},
    go:"Watching your face, cooing back.", stop:"Nothing to stop. Just pause when she needs quiet.",
    kit:[], why:"How many words she hears now shapes how many she'll know later.", src:[]},
-  {id:"changing-chat", t:"Changing-table chat", type:"words", mood:["calm","fed"], mins:"2\u20134 min", h:"adult", min:0, needs:[], builds:["babbles","words"],
+  {id:"changing-chat", t:"Changing-table chat", type:"words", mood:["calm"], mins:"2\u20134 min", h:"adult", min:0, needs:[], builds:["babbles","words"],
    sum:"Turn every diaper change into a conversation",
    how:["Name each step: \u201cSnaps open. Cool wipe. Clean diaper.\u201d","Pause and wait for her sounds.","End with the same little song every time."],
    easier:"Just keep a calm, running commentary.",
@@ -883,7 +885,7 @@ const IDEAS = [
    kit:[], why:"Gestures come before first words.", src:[]},
 
   // ---------------- OUT IN THE WORLD ----------------
-  {id:"texture-walk", t:"Early stroller walk", type:"world", mood:["outside","calm","fed"], mins:"15\u201330 min", h:"help", min:0, needs:[],
+  {id:"texture-walk", t:"Early stroller walk", type:"world", mood:["outside","calm","fed"], mins:"15\u201330 min", h:"help", min:0, needs:[], fed:"Sit the stroller seat more upright and keep the pace smooth.",
    sum:"A morning walk with stops to touch and listen",
    how:["Go early, before the heat.","Stop in the shade to let her touch leaves and tree bark.","Take off her socks and rest her feet on cool grass. Name what you hear."],
    easier:"A short loop with no stops, just talking.",
@@ -937,14 +939,22 @@ const IDEAS = [
    go:"Wide eyes, staring at the windows.", stop:"Crying from fear. Talk to her calmly; skip it next time.",
    kit:[], safety:"Rear-facing, she'll mostly see the side and back windows. Don't go when she's already tired or fussy.",
    why:"Big sounds, bright colors and something completely unexpected.", src:[]},
-  {id:"splash-pad", t:"Fountain visit", type:"world", mood:["outside"], mins:"10 min", h:"help", min:3, needs:[],
-   sum:"Watch and hear moving water",
-   how:["Find a fountain or splash pad on a cool morning.","Hold her close enough to see and hear it.","Let her touch the spray if she's interested."],
-   easier:"Watch from a bench.",
-   next:{t:"Sit her at the shallow edge with you holding her.", needs:["sits"]},
-   go:"Staring at the water, reaching.", stop:"Cold, startled or overwhelmed. Move away.",
-   kit:[], safety:"You hold her the whole time near water. Mornings, shade and short visits in heat.",
-   why:"Moving water fascinates babies.", src:["water"]},
+  {id:"splash-pad", t:"Fountain watch", type:"world", mood:["outside","calm"], mins:"10 min", h:"adult", min:3, needs:[],
+   sum:"Watch and listen to a decorative fountain",
+   how:["Find a fountain on a cool morning.","Hold her where she can see the water move and hear it splash.","Name what you see: up, down, sparkle, splash."],
+   easier:"Watch from a bench a little further back.",
+   next:{t:"When she's sitting on her own, try water play at a designated splash pad instead (see Splash pad)."},
+   go:"Staring at the water, stilling to listen.", stop:"Cold, startled or overwhelmed. Move away.",
+   kit:[], safety:"Watch and listen only: no touching the spray or sitting at the edge. Decorative fountains aren't built or regulated for people to enter. Mornings, shade and short visits in heat.",
+   why:"Moving water fascinates babies, and the sound is soothing.", src:["fountains"]},
+  {id:"splash-pad-play", t:"Splash pad", type:"water", mood:["outside","wiggly"], mins:"10\u201315 min", h:"help", min:7, needs:["sits"],
+   sum:"Gentle water play at a designated splash pad",
+   how:["Choose a designated splash pad, not a decorative fountain.","Go early, while it's quiet and cool. Sit with her at the gentlest, lowest spray.","Let her pat the wet ground and feel light spray on her hands and feet."],
+   easier:"Sit at the edge with her on your lap and let a few drops land on her feet.",
+   next:{t:"Let her crawl toward a low bubbler with you right beside her.", needs:["crawls"]},
+   go:"Patting, kicking, laughing at the drops.", stop:"Cold, startled by a jet, or trying to drink the water. Out, dry and cuddle.",
+   kit:[], safety:"Designated splash pads only. Keep the spray off her face and the water out of her mouth; skip it if the water looks cloudy or pools. Swim diaper, shade, and a hand on her the whole time.",
+   why:"Water play in a place designed for it.", src:["fountains","water"]},
   {id:"swing", t:"Park swing", type:"world", mood:["outside","wiggly"], mins:"5\u201310 min", h:"help", min:6, needs:["head","sits"],
    sum:"The infant bucket swing, gently",
    how:["Use the infant bucket seat only.","Stand in front so she can see you, and push very gently.","Say \u201cWhee!\u201d on every swing forward."],
@@ -1008,7 +1018,7 @@ const IDEAS = [
    sum:"Half an inch of water to pat and splash, from your lap",
    how:["Sit her on your lap at a table.","Put half an inch of lukewarm water in a baking tray on a towel.","Let her pat and splash. Float a measuring cup in it."],
    easier:"Wet a washcloth and let her squeeze it.",
-   next:{t:"Add a few ice cubes to chase around.", needs:["sits"]},
+   next:{t:"Float a large infant bath toy for her to push, chase and grab."},
    go:"Splashing, patting, surprised faces.", stop:"Cold, or trying to drink it. Stop and dry her.",
    kit:["tray","towel","cups"], safety:"She stays on your lap, hands only, never face near the water. Keep a hand on her, and empty the tray as soon as you're done.",
    why:"Water is one of the richest sensory experiences there is.", src:["water"]},
@@ -1123,7 +1133,7 @@ function ageLabel(){
 const has = k => S.skills.includes(k);
 function status(i){
   const age = ageMonths();
-  if (i.out && has(i.out)) return "outgrown";
+  if (i.out && has(i.out)) return "familiar";
   if ((i.needs || []).some(n => !has(n))) return "later";
   if (age !== null && i.min && age < i.min - 0.5) return "later";
   return "ready";
@@ -1131,7 +1141,7 @@ function status(i){
 function readinessText(i){
   const st = status(i), needs = (i.needs||[]).map(n => lower(skillName[n]));
   const ageNote = i.min ? " Many babies start around " + i.min + " months, but her skills matter more than the date." : "";
-  if (st === "outgrown") return "Probably too easy now, since she " + lower(skillName[i.out]) + ". Try the next level, or keep it if she still loves it.";
+  if (st === "familiar") return "Familiar practice: she already " + lower(skillName[i.out]) + ". Babies love repeating what they've mastered, so keep playing it; try the next level when she wants a new challenge.";
   if (st === "later"){
     const miss = (i.needs||[]).filter(n => !has(n)).map(n => lower(skillName[n]));
     if (miss.length) return "Marked for later: she'll be ready once she " + joinAnd(miss) + "." + ageNote;
@@ -1140,6 +1150,7 @@ function readinessText(i){
   if (needs.length) return "Showing because she " + joinAnd(needs) + ".";
   return "Showing because it works at any stage.";
 }
+const avail = i => status(i) !== "later";
 const who = () => S.name || "Baby";
 
 /* ---------- header ---------- */
@@ -1167,10 +1178,10 @@ function shuffled(arr, s){
   return a;
 }
 function renderPicks(){
-  const pool = IDEAS.filter(i => i.mood.includes(mood) && status(i) === "ready");
+  const pool = IDEAS.filter(i => i.mood.includes(mood) && avail(i));
   const fav = shuffled(pool.filter(i => S.anchors.includes(i.id)), seed);
-  const fresh = shuffled(pool.filter(i => !S.anchors.includes(i.id) && !S.tried[i.id]), seed);
-  const rest = shuffled(pool.filter(i => !S.anchors.includes(i.id) && S.tried[i.id]), seed);
+  const fresh = shuffled(pool.filter(i => !S.anchors.includes(i.id) && !S.tried[i.id] && status(i) === "ready"), seed);
+  const rest = shuffled(pool.filter(i => !S.anchors.includes(i.id) && (S.tried[i.id] || status(i) === "familiar")), seed);
   // one favorite, then mostly new, with an occasional repeat of something tried
   const ordered = [...fav.slice(0,1), ...fresh.slice(0,1), ...rest.slice(0,1), ...fresh.slice(1), ...rest.slice(1), ...fav.slice(1)];
   const seen = new Set(), picks = [];
@@ -1180,11 +1191,12 @@ function renderPicks(){
     if (!seen.has(i.id)){ seen.add(i.id); picks.push(i); }
   }
   const list = $("#pickList"); list.innerHTML = "";
+  $("#fedNote").hidden = mood !== "fed";
   if (!picks.length){ list.innerHTML = '<div class="pick-item">Nothing for this yet. Try another mood.</div>'; return; }
   picks.forEach(i => {
     const a = document.createElement("a"); a.className = "pick-item"; a.href = "#ideas/" + i.id;
-    const tag = S.anchors.includes(i.id) ? '<span class="fav">Favorite</span>' : (!S.tried[i.id] ? '<span class="fav">New</span>' : '<span class="fav">Again</span>');
-    a.innerHTML = tag + esc(i.t) + "<small>" + esc(i.sum) + " \u00b7 " + esc(i.mins) + "</small>";
+    const tag = S.anchors.includes(i.id) ? '<span class="fav">Favorite</span>' : (S.tried[i.id] || status(i) === "familiar" ? '<span class="fav">Again</span>' : '<span class="fav">New</span>');
+    a.innerHTML = tag + esc(i.t) + "<small>" + esc(mood === "fed" && i.fed ? i.fed : i.sum) + " \u00b7 " + esc(i.mins) + "</small>";
     list.appendChild(a);
   });
 }
@@ -1222,7 +1234,7 @@ function nextSkills(){
 }
 function renderFocus(){
   const box = $("#focus"); box.innerHTML = "";
-  const ns = nextSkills().map(([k,l]) => [k,l,IDEAS.filter(i => (i.builds||[]).includes(k) && status(i) === "ready").length]).filter(x => x[2] > 0);
+  const ns = nextSkills().map(([k,l]) => [k,l,IDEAS.filter(i => (i.builds||[]).includes(k) && avail(i)).length]).filter(x => x[2] > 0);
   if (!ns.length){ box.innerHTML = '<div class="empty">Tick what she can do on the Baby tab to see ideas for what\'s next.</div>'; return; }
   ns.forEach(([k,l,n]) => {
     const a = document.createElement("a"); a.href = "#ideas/skill:" + k;
@@ -1278,11 +1290,13 @@ function ideaEl(i){
   if (S.anchors.includes(i.id)) badges.push('<span class="badge star">Favorite</span>');
   if (S.tried[i.id]) badges.push('<span class="badge tried">Tried ' + esc(prettyDate(S.tried[i.id])) + '</span>');
   else if (st === "ready") badges.push('<span class="badge new">New</span>');
+  if (st === "familiar" && S.tried[i.id]) badges.splice(badges.findIndex(b => b.includes("Tried")), 1);
   if (st === "later") badges.push('<span class="badge later">For later</span>');
-  if (st === "outgrown") badges.push('<span class="badge later">Maybe outgrown</span>');
+  if (st === "familiar") badges.push('<span class="badge tried">Familiar practice</span>');
 
   let body = '<ol>' + i.how.map(s => '<li>' + esc(s) + '</li>').join("") + '</ol>';
   body += '<div class="watchbox"><p class="go"><b>Keep going:</b> ' + esc(i.go) + '</p><p class="no"><b>Simplify or stop:</b> ' + esc(i.stop) + '</p><a href="#cues">Reading her cues</a></div>';
+  if (i.fed) body += '<div class="sec"><b>Right after a bottle</b>' + esc(i.fed) + '</div>';
   if (i.easier) body += '<div class="sec"><b>Make it easier</b>' + esc(i.easier) + '</div>';
   if (i.next){
     const miss = (i.next.needs||[]).filter(n => !has(n)).map(n => lower(skillName[n]));
@@ -1324,11 +1338,11 @@ function renderIdeas(){
     sb.innerHTML = '<div class="banner">Building: ' + esc(lower(skillName[skillFilter] || skillFilter)) + '<button type="button" class="linkbtn" id="clearSkill">Clear</button></div>';
     $("#clearSkill").addEventListener("click", () => { skillFilter = null; location.hash = "#ideas"; });
   } else sb.innerHTML = "";
-  const order = {ready:0, later:1, outgrown:2};
+  const order = {ready:0, familiar:1, later:2};
   const list = IDEAS.filter(i =>
     (typeFilter === "all" || i.type === typeFilter) &&
     (!skillFilter || (i.builds||[]).includes(skillFilter)) &&
-    (all || status(i) === "ready") &&
+    (all || avail(i)) &&
     (!q || (i.t + " " + i.sum + " " + i.how.join(" ") + " " + (i.kit||[]).map(k => KIT[k] ? KIT[k].n : "").join(" ")).toLowerCase().includes(q))
   ).sort((a,b) => order[status(a)] - order[status(b)]);
   $("#ideaCount").textContent = list.length + (list.length === 1 ? " idea" : " ideas") + (all ? "" : " she's ready for");
@@ -1339,7 +1353,7 @@ function renderIdeas(){
 function openIdea(id){
   if (!byId[id]) return;
   let el = document.getElementById("idea-" + id);
-  if (!el){ typeFilter = "all"; skillFilter = null; $("#q").value = ""; if (status(byId[id]) !== "ready") $("#showAll").checked = true; renderTypeChips(); renderIdeas(); el = document.getElementById("idea-" + id); }
+  if (!el){ typeFilter = "all"; skillFilter = null; $("#q").value = ""; if (!avail(byId[id])) $("#showAll").checked = true; renderTypeChips(); renderIdeas(); el = document.getElementById("idea-" + id); }
   if (!el) return;
   el.open = true;
   const rm = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -1430,7 +1444,7 @@ function renderShop(){
   const groups = { starter:[], home:[], make:[], now:[], later:[] };
   Object.entries(KIT).forEach(([k,x]) => {
     const ideas = uses[k] || []; if (!ideas.length) return;
-    const readyAny = ideas.some(i => status(i) === "ready");
+    const readyAny = ideas.some(avail);
     if (x.c === "home") groups.home.push(k);
     else if (x.c === "make") groups.make.push(k);
     else if (x.starter && readyAny) groups.starter.push(k);
@@ -1439,7 +1453,7 @@ function renderShop(){
   });
   const item = (k, cls) => {
     const x = KIT[k], ideas = uses[k] || [];
-    const ready = ideas.filter(i => status(i) === "ready"), shown = ready.length ? ready : ideas;
+    const ready = ideas.filter(avail), shown = ready.length ? ready : ideas;
     return '<li class="' + (cls||"") + '"><div class="nm">' + esc(x.n) + ' <span class="tag">' + USELABEL[x.u] + '</span></div>' +
       (x.how ? '<div class="how">' + esc(x.how) + '</div>' : "") +
       '<div class="used">For: ' + shown.slice(0,5).map(i => '<a href="#ideas/' + i.id + '">' + esc(i.t) + '</a>').join(", ") + (shown.length > 5 ? " and " + (shown.length - 5) + " more" : "") + '</div></li>';
