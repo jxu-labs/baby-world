@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Baby's World</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F3F6FB; --surface:#FFFFFF; --ink:#1D2742; --muted:#58637E; --line:#DCE3EE;
+  --sun:#F6C744; --sun-ink:#2A2210; --ok:#2E7D5B; --warn:#B4461C;
+  --t-move:#CDEBDD; --t-hands:#D3E4F7; --t-senses:#FBEFC2; --t-sound:#F7D4DD;
+  --t-words:#E3DDF5; --t-world:#D6EFEA; --t-people:#FBE0CC; --t-water:#CFEAF6;
+  --radius-lg:22px; --radius-md:14px; --radius-sm:10px;
+  --font:"Nunito", ui-rounded, "SF Pro Rounded", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  box-sizing:border-box; color-scheme:light;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#121826; --surface:#1B2334; --ink:#E9EEF7; --muted:#A3AEC6; --line:#2C3850; --ok:#6FD3A5; --warn:#FF9A6B;
+    --t-move:#1F3B31; --t-hands:#1E3048; --t-senses:#3B331A; --t-sound:#3E2230;
+    --t-words:#2D2745; --t-world:#18383A; --t-people:#3E2A1C; --t-water:#16334A;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121826; --surface:#1B2334; --ink:#E9EEF7; --muted:#A3AEC6; --line:#2C3850; --ok:#6FD3A5; --warn:#FF9A6B;
+  --t-move:#1F3B31; --t-hands:#1E3048; --t-senses:#3B331A; --t-sound:#3E2230;
+  --t-words:#2D2745; --t-world:#18383A; --t-people:#3E2A1C; --t-water:#16334A;
+  color-scheme:dark;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:17px;line-height:1.5;-webkit-text-size-adjust:100%}
+a{color:inherit}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--sun);outline-offset:2px;border-radius:6px}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+
+.wrap{max-width:640px;margin:0 auto;padding:14px 16px 110px}
+header.top{padding:6px 2px 12px}
+header.top h1{margin:0;font-size:1.5rem;font-weight:900;letter-spacing:-.015em}
+header.top .age{color:var(--muted);font-weight:700;font-size:.95rem}
+h2{font-size:1.45rem;font-weight:900;margin:6px 0 6px;letter-spacing:-.015em}
+h3{font-size:1.08rem;font-weight:800;margin:24px 0 8px}
+p{margin:0 0 10px}
+.muted{color:var(--muted)} .small{font-size:.9rem}
+.lead{color:var(--muted);margin-bottom:12px}
+
+/* Today's picks: the one loud element */
+.picks{background:var(--sun);color:var(--sun-ink);border-radius:var(--radius-lg);padding:16px 16px 14px}
+.picks h2{color:var(--sun-ink);font-size:1.15rem;margin:0 0 10px}
+.moods{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.mood{border:2px solid rgba(42,34,16,.28);background:rgba(255,255,255,.55);color:var(--sun-ink);border-radius:var(--radius-sm);padding:10px 8px;font-weight:800;font-size:.95rem;cursor:pointer;text-align:left}
+.mood[aria-pressed="true"]{background:var(--sun-ink);color:var(--sun);border-color:var(--sun-ink)}
+.mood small{display:block;font-weight:700;opacity:.8;font-size:.8rem}
+.pick-list{display:grid;gap:8px}
+.pick-item{display:block;text-decoration:none;background:rgba(255,255,255,.8);color:#1D2742;border-radius:var(--radius-sm);padding:10px 12px;font-weight:800}
+.pick-item small{display:block;font-weight:700;color:#4A4636}
+.pick-item .fav{float:right;font-size:.8rem;font-weight:800;background:var(--sun);border-radius:99px;padding:1px 8px}
+.picks .row-end{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
+.linkbtn{background:none;border:0;padding:8px 2px;font-weight:800;text-decoration:underline;cursor:pointer}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-md);padding:14px 16px;margin:10px 0}
+.skill-focus{display:grid;gap:8px}
+.skill-focus a{display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-md);padding:12px 14px;text-decoration:none;font-weight:800}
+.skill-focus a span{font-weight:700;color:var(--muted);font-size:.88rem;white-space:nowrap}
+
+.checks{list-style:none;padding:0;margin:0;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-md);overflow:hidden}
+.checks li{border-bottom:1px solid var(--line);display:flex;align-items:center}
+.checks li:last-child{border-bottom:0}
+.checks label{display:flex;gap:12px;align-items:center;padding:12px 14px;cursor:pointer;font-weight:700;flex:1}
+.checks input{width:24px;height:24px;accent-color:var(--ok);flex:none}
+.checks input:checked+span{color:var(--muted);text-decoration:line-through}
+.checks a{padding:12px 14px;font-weight:800;font-size:.85rem;color:var(--muted)}
+.empty{border:2px dashed var(--line);border-radius:var(--radius-md);padding:12px 14px;color:var(--muted);font-weight:600}
+
+/* Ideas */
+.search{width:100%;font:inherit;font-weight:700;padding:11px 14px;border-radius:var(--radius-md);border:2px solid var(--line);background:var(--surface);color:var(--ink);margin-bottom:8px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:4px 2px 8px;margin:0 -2px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;font-weight:800;font-size:.9rem;padding:7px 13px;border-radius:99px;border:2px solid var(--line);background:var(--surface);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.toggle{display:flex;align-items:center;gap:10px;font-weight:700;font-size:.92rem;color:var(--muted);margin:4px 0 6px}
+.toggle input{width:20px;height:20px}
+.banner{display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--surface);border:2px solid var(--ink);border-radius:var(--radius-md);padding:10px 14px;font-weight:800;margin:6px 0}
+.count{color:var(--muted);font-weight:700;font-size:.9rem;margin:6px 2px}
+
+details.idea{background:var(--surface);border:1px solid var(--line);border-left:8px solid var(--tint);border-radius:var(--radius-md);margin:8px 0}
+details.idea>summary{list-style:none;cursor:pointer;padding:12px 44px 12px 14px;position:relative;font-weight:800}
+details.idea>summary::-webkit-details-marker{display:none}
+details.idea>summary::after{content:"+";position:absolute;right:16px;top:14px;font-size:1.4rem;font-weight:700;color:var(--muted)}
+details.idea[open]>summary::after{content:"\2212"}
+details.idea .sum{display:block;font-weight:600;color:var(--muted);font-size:.92rem}
+details.idea .badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.badge{font-size:.76rem;font-weight:800;padding:2px 9px;border-radius:99px;background:var(--tint)}
+.badge.tried{background:transparent;border:1.5px solid var(--ok);color:var(--ok)}
+.badge.new{background:transparent;border:1.5px solid var(--ink)}
+.badge.later{background:transparent;border:1.5px dashed var(--muted);color:var(--muted)}
+.badge.star{background:var(--sun);color:var(--sun-ink)}
+details.idea .body{padding:0 14px 14px}
+details.idea ol{padding-left:22px;margin:6px 0 10px}
+details.idea ol li{margin-bottom:5px}
+.kv{margin:8px 0;font-size:.95rem}
+.kv b{display:block;font-size:.85rem;color:var(--muted)}
+.kv.watch b{color:var(--warn)}
+.actions{display:flex;gap:8px;margin-top:12px}
+.actions button{flex:1;border-radius:var(--radius-sm);padding:10px;font-weight:800;cursor:pointer;border:2px solid var(--ink);background:var(--surface)}
+.actions button.primary{background:var(--ink);color:var(--bg)}
+.actions button[aria-pressed="true"]{background:var(--sun);color:var(--sun-ink);border-color:var(--sun)}
+.flash{box-shadow:0 0 0 3px var(--sun)}
+
+.t-move{--tint:var(--t-move)} .t-hands{--tint:var(--t-hands)} .t-senses{--tint:var(--t-senses)} .t-sound{--tint:var(--t-sound)}
+.t-words{--tint:var(--t-words)} .t-world{--tint:var(--t-world)} .t-people{--tint:var(--t-people)} .t-water{--tint:var(--t-water)}
+
+/* Firsts */
+.meter{height:12px;background:var(--line);border-radius:99px;overflow:hidden;margin:6px 0 4px}
+.meter span{display:block;height:100%;background:var(--ok);border-radius:99px;transition:width .4s}
+.firsts{display:flex;flex-wrap:wrap;gap:8px}
+.first{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:8px 12px;font-weight:800;font-size:.93rem;cursor:pointer;text-align:left}
+.first small{display:block;font-weight:700;font-size:.75rem;color:var(--muted)}
+.first.got{background:var(--t-move);border-color:var(--ok)}
+.first.got::before{content:"\2713  ";color:var(--ok)}
+.addrow{display:flex;gap:8px;margin-top:10px}
+.addrow input{flex:1;font:inherit;font-weight:700;padding:10px 12px;border-radius:var(--radius-sm);border:2px solid var(--line);background:var(--surface);color:var(--ink)}
+.btn{border:2px solid var(--ink);background:var(--ink);color:var(--bg);font-weight:800;border-radius:var(--radius-sm);padding:10px 14px;cursor:pointer}
+.btn.ghost{background:var(--surface);color:var(--ink)}
+.btn.full{width:100%}
+
+/* Baby */
+.field{margin-bottom:12px}
+.field label{display:block;font-weight:800;font-size:.9rem;margin-bottom:4px}
+.field input{width:100%;font:inherit;font-weight:700;padding:10px 12px;border-radius:var(--radius-sm);border:2px solid var(--line);background:var(--surface);color:var(--ink);min-height:46px}
+.kit{columns:2;column-gap:16px;padding-left:18px;margin:6px 0}
+.kit li{break-inside:avoid;margin-bottom:4px;font-size:.95rem}
+@media (max-width:380px){.kit{columns:1}}
+
+nav.tabs{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);z-index:10}
+nav.tabs .inner{max-width:640px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
+nav.tabs a{display:flex;flex-direction:column;align-items:center;gap:2px;padding:9px 2px 10px;text-decoration:none;font-weight:800;font-size:.8rem;color:var(--muted)}
+nav.tabs svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+nav.tabs a[aria-current="page"]{color:var(--ink)}
+nav.tabs a[aria-current="page"] svg{stroke-width:2.6}
+section.view{display:none} section.view.on{display:block}
+.toast{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:99px;font-weight:800;font-size:.92rem;opacity:0;pointer-events:none;transition:opacity .25s;z-index:20;max-width:90vw;text-align:center}
+.toast.on{opacity:1}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <h1 id="title">Baby's World</h1>
+    <div class="age" id="age"></div>
+  </header>
+
+  <!-- TODAY -->
+  <section class="view" data-view="today">
+    <div id="setupNudge"></div>
+    <div class="picks">
+      <h2>Right now she's…</h2>
+      <div class="moods" id="moods"></div>
+      <div class="pick-list" id="pickList"></div>
+      <div class="row-end">
+        <button class="linkbtn" id="shuffle" type="button">Show me others</button>
+        <a class="linkbtn" href="#ideas">All ideas</a>
+      </div>
+    </div>
+
+    <h3>Everyday favorites</h3>
+    <p class="small muted">Repeat these daily. Babies learn by doing the same thing again and again until they know what comes next.</p>
+    <ul class="checks" id="anchors"></ul>
+
+    <h3>What she's working on</h3>
+    <div class="skill-focus" id="focus"></div>
+
+    <h3>Try a first today</h3>
+    <div id="firstNudge"></div>
+  </section>
+
+  <!-- IDEAS -->
+  <section class="view" data-view="ideas">
+    <h2>Ideas</h2>
+    <p class="lead">Stop any activity when she turns away, arches or fusses. That's her saying she's done.</p>
+    <input class="search" id="q" type="search" placeholder="Search ideas" aria-label="Search ideas">
+    <div class="chips" id="typeChips" role="group" aria-label="Filter by type"></div>
+    <div id="skillBanner"></div>
+    <label class="toggle"><input type="checkbox" id="showAll"> Also show ideas for later and ones she's outgrown</label>
+    <div class="count" id="ideaCount"></div>
+    <div id="ideaList"></div>
+  </section>
+
+  <!-- FIRSTS -->
+  <section class="view" data-view="firsts">
+    <h2>Firsts</h2>
+    <p class="lead">Every new thing she touches, hears, smells, sees and visits. Tap one when it happens.</p>
+    <div class="card">
+      <b id="firstCount"></b>
+      <div class="meter"><span id="firstMeter"></span></div>
+    </div>
+    <div id="firstGroups"></div>
+    <h3>Add your own</h3>
+    <div class="addrow">
+      <input id="customFirst" placeholder="e.g. Saw a hot air balloon" aria-label="New first">
+      <button class="btn" id="addFirst" type="button">Add</button>
+    </div>
+    <div id="customList" class="firsts" style="margin-top:10px"></div>
+    <h3>Share</h3>
+    <button class="btn ghost full" id="copyLog" type="button">Copy the firsts list to send to a parent</button>
+  </section>
+
+  <!-- BABY -->
+  <section class="view" data-view="baby">
+    <h2>Baby</h2>
+    <p class="lead">Ideas adjust to what she can do. Update this whenever she learns something new.</p>
+    <div class="field"><label for="name">Name</label><input id="name" autocomplete="off"></div>
+    <div class="field"><label for="birth">Birthday</label><input id="birth" type="date"></div>
+    <div id="skillGroups"></div>
+
+    <h3>Another phone</h3>
+    <p class="small muted">Send this link to a caregiver. Opening it copies the name, birthday, skills and favorites to their phone. Nothing is stored on the website itself.</p>
+    <button class="btn full" id="copySetup" type="button">Copy setup link</button>
+
+    <h3>What to get</h3>
+    <p class="small muted">Everything the ideas she's ready for use. Most of it is already in the house.</p>
+    <ul class="kit" id="kit"></ul>
+
+    <h3>Start over</h3>
+    <button class="btn ghost full" id="reset" type="button">Erase everything on this phone</button>
+    <p class="small muted" style="margin-top:14px" id="version"></p>
+  </section>
+</div>
+
+<nav class="tabs" aria-label="Sections"><div class="inner">
+  <a href="#today" data-tab="today"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>Today</a>
+  <a href="#ideas" data-tab="ideas"><svg viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></svg>Ideas</a>
+  <a href="#firsts" data-tab="firsts"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.4 6.8 19.1l1-5.8L3.5 9.2l5.9-.8z"/></svg>Firsts</a>
+  <a href="#baby" data-tab="baby"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>Baby</a>
+</div></nav>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* =====================================================================
+   CONTENT. Add or edit ideas and firsts here; the app adapts on its own.
+   Idea fields:
+     id, t (title), type, mood [wiggly|calm|fussy|outside], min (months),
+     needs [skills she must have], out (skill that means she's outgrown it),
+     builds [skills it works toward], sum, how [steps], learn, grow (next level),
+     watch (one safety line), kit [supplies]
+   ===================================================================== */
+const VERSION = "Content for 3–12 months. Updated September 2026.";
+
+const TYPES = {
+  move:{n:"Movement"}, hands:{n:"Hands"}, senses:{n:"Senses"}, sound:{n:"Sound & music"},
+  words:{n:"Words & books"}, world:{n:"Out in the world"}, people:{n:"People & animals"}, water:{n:"Water"}
+};
+const MOODS = {
+  wiggly:{n:"Wiggly & alert", d:"Ready to move"},
+  calm:{n:"Calm & curious", d:"Quiet, looking around"},
+  fussy:{n:"Fussy", d:"Needs a reset"},
+  outside:{n:"Up for an outing", d:"Walk, errand, park"}
+};
+const SKILLS = [
+  {g:"Moving", items:[
+    ["head","Holds her head steady"],["forearms","Pushes up on forearms"],["sitsup","Sits with support"],
+    ["stands","Takes weight on her legs when held"],["straightarms","Pushes up on straight arms"],
+    ["roll","Rolls both ways, often"],["sits","Sits on her own"],["crawls","Crawls"],
+    ["pulls","Pulls up to stand"],["cruises","Walks holding furniture"],["walks","Walks on her own"]]},
+  {g:"Hands", items:[
+    ["grabs","Reaches for and grabs toys"],["transfer","Passes toys hand to hand"],["bang","Bangs two things together"],
+    ["release","Drops things on purpose"],["pincer","Picks up tiny things with thumb and finger"],["point","Points at things"]]},
+  {g:"Talking & understanding", items:[
+    ["coos","Coos, squeals and laughs"],["babbles","Babbles (ba-ba, da-da)"],["name","Turns when she hears her name"],
+    ["peekaboo","Looks for something you hid"],["waves","Waves or claps"],["words","Says a first word"]]}
+];
+
+const IDEAS = [
+  // ---------------- MOVEMENT ----------------
+  {id:"mirror-pushups", t:"Mirror push-ups", type:"move", mood:["wiggly"], min:2, needs:["forearms"], out:"crawls", builds:["straightarms"],
+   sum:"Tummy time facing a mirror, with a toy that slowly rises",
+   how:["Stand a floor mirror in front of her while she's on her tummy.","Tap the mirror and make faces at her reflection.","Slowly lift a toy above the mirror so she pushes higher to keep watching."],
+   learn:"Arm strength to go from forearms to straight arms, the step before crawling.",
+   grow:"Move the toy to one side so she shifts her weight onto one arm and reaches with the other.", kit:["Floor mirror"]},
+  {id:"out-of-reach", t:"Just out of reach", type:"move", mood:["wiggly"], min:3, needs:["forearms"], out:"crawls", builds:["crawls"],
+   sum:"A favorite toy placed just beyond her fingertips",
+   how:["On her tummy, set a favorite toy a few inches past her reach.","Cheer her on as she wiggles and inches toward it.","Hand it over after a real effort, before she gets frustrated."],
+   learn:"This is crawling practice: pushing, pivoting and scooting toward a goal.",
+   grow:"Each time she gets close, move it a couple of inches further.", kit:["Favorite toy"]},
+  {id:"roll-rattle", t:"Roll to the rattle", type:"move", mood:["wiggly"], min:3, out:"roll", builds:["roll"],
+   sum:"A sound off to one side gives her a reason to roll",
+   how:["Lay her on her back on the mat.","Shake a rattle at her eye level, off to one side.","Move it slowly further to the side until she rolls to follow it.","Do both sides."],
+   learn:"Rolling on purpose, not by accident. It's her first way of getting somewhere.",
+   grow:"Start her on her tummy and put the rattle behind her shoulder.", kit:["Rattle"]},
+  {id:"blanket-roll", t:"Blanket tip", type:"move", mood:["wiggly","fussy"], min:3, out:"roll", builds:["roll"],
+   sum:"Lift the edge of a blanket so she tips onto her side",
+   how:["Lay her on her back on a thin blanket on the floor.","Slowly lift one edge so she tips onto her side.","Pause there, then let her finish the roll herself if she can.","Sing \u201cOver we go!\u201d every time."],
+   learn:"Shows her body what rolling feels like so she starts doing it on her own.",
+   grow:"Lift less each time and let her do more of the work.", watch:"Slow and low. Only on the floor.", kit:["Thin blanket"]},
+  {id:"ball-rock", t:"Ball rock", type:"move", mood:["wiggly","fussy"], min:4, needs:["head"], builds:["straightarms","sits"],
+   sum:"Tummy-down over an exercise ball, rocking forward and back",
+   how:["Lay her tummy-down over an exercise ball.","Keep both hands firmly on her hips.","Rock forward slowly so her hands reach toward the floor, then back.","Try rocking side to side too."],
+   learn:"The reflex to catch herself with her hands, which she needs for sitting and crawling.",
+   grow:"Sit her on top of the ball, hands on her hips, and bounce gently so she works on balance.", watch:"Both hands on her the whole time.", kit:["Exercise ball"]},
+  {id:"airplane", t:"Airplane", type:"move", mood:["wiggly"], min:4, needs:["head"], builds:["straightarms"],
+   sum:"She flies on your shins while you lie on your back",
+   how:["Lie on your back with your knees bent.","Rest her tummy on your shins, holding her firmly under the arms.","Lift your legs slowly up and down and side to side.","Make airplane noises."],
+   learn:"Head, back and core strength, and a lot of eye contact.",
+   grow:"Fly her in slow circles and pause to see if she reaches for your face.", watch:"Keep a firm hold under her arms.", kit:[]},
+  {id:"football-fly", t:"Flying tour", type:"move", mood:["fussy","calm"], min:0, builds:["head"],
+   sum:"Carry her tummy-down along your forearm around the house",
+   how:["Lay her tummy-down along your forearm, her head near your elbow, your hand between her legs.","Keep your other hand on her back.","Walk slowly around the house, stopping to look at things.","Tell her what she's seeing."],
+   learn:"Neck strength and a new view of the world. It calms most fussy babies.",
+   grow:"Stop at the window and let her look out for a minute.", kit:[]},
+  {id:"stand-bounce", t:"Stand and bounce", type:"move", mood:["wiggly"], min:4, needs:["stands"], out:"walks", builds:["pulls"],
+   sum:"Standing on your lap, pushing and bouncing",
+   how:["Stand her on your lap, hands around her chest.","Let her push and bounce with her legs.","Sing a bouncing song and bounce on the beat."],
+   learn:"Leg strength and balance for standing later.",
+   grow:"Loosen your hold a little so her body does more of the balancing.", kit:[]},
+  {id:"sit-reach", t:"Sit and reach", type:"move", mood:["calm","wiggly"], min:4, needs:["sitsup"], out:"sits", builds:["sits"],
+   sum:"Supported sitting with toys offered off to the side",
+   how:["Sit her in the U of your crossed legs, or with a nursing pillow around her.","Offer toys slightly to each side and a little high.","Let her reach, wobble and rebalance. Catch her if she tips."],
+   learn:"The balance and core strength to sit on her own.",
+   grow:"Offer toys lower and further out so she leans and comes back up.", kit:["Nursing pillow"]},
+  {id:"baby-yoga", t:"Baby yoga", type:"move", mood:["calm","fussy"], min:0, builds:["roll"],
+   sum:"Gentle stretches, bicycle legs and massage",
+   how:["On her back, bicycle her legs slowly.","Bring opposite hand to opposite foot, then switch.","Massage her tummy in slow clockwise circles, then her arms and legs.","Sing or hum the whole time."],
+   learn:"Body awareness. Crossing her body's midline wires both sides of the brain together.",
+   grow:"Let her grab her own feet and play with them.", kit:["Baby lotion (optional)"]},
+  {id:"pillow-mountain", t:"Pillow mountains", type:"move", mood:["wiggly"], min:6, needs:["crawls"], builds:["pulls"],
+   sum:"Couch cushions on the floor to crawl over",
+   how:["Lay couch cushions and pillows on the floor in a low, lumpy landscape.","Put a toy on the far side.","Let her climb, tumble and crawl over."],
+   learn:"Strength, coordination and figuring out where her body is in space.",
+   grow:"Make it steeper, or hide the toy under a cushion.", watch:"Nothing higher than she could safely tumble off.", kit:["Couch cushions"]},
+  {id:"box-tunnel", t:"Box tunnel", type:"move", mood:["wiggly"], min:7, needs:["crawls"], builds:["crawls"],
+   sum:"A cardboard box with both ends open to crawl through",
+   how:["Open both ends of a big box and lay it on its side.","Sit at the far end and call her through.","Peek in at her and play peekaboo halfway."],
+   learn:"Crawling with purpose, and the brave feeling of going into a new space.",
+   grow:"Line up two boxes, or drape a blanket over chairs.", kit:["Big cardboard box"]},
+  {id:"chase", t:"I'm gonna get you", type:"move", mood:["wiggly"], min:7, needs:["crawls"], builds:["crawls"],
+   sum:"A slow crawling chase",
+   how:["Get on all fours and crawl slowly after her saying \u201cI'm gonna get you!\u201d","When you catch her, give a gentle tickle.","Then let her chase you."],
+   learn:"Speed, turning and taking turns, plus a lot of laughing.",
+   grow:"Hide behind the couch and let her find you.", kit:[]},
+  {id:"couch-buffet", t:"Couch buffet", type:"move", mood:["wiggly"], min:8, needs:["pulls"], out:"walks", builds:["cruises"],
+   sum:"Toys spread along the couch so she cruises to reach them",
+   how:["Line up interesting toys along the couch cushions.","Stand her at one end holding on.","Let her side-step along to get to each one."],
+   learn:"Cruising along furniture, the last step before walking.",
+   grow:"Leave a small gap between couch and coffee table for her to cross.", kit:["Toys"]},
+  {id:"basket-walker", t:"Laundry basket walker", type:"move", mood:["wiggly"], min:9, needs:["pulls"], out:"walks", builds:["walks"],
+   sum:"Push a weighted basket across the floor",
+   how:["Put a few heavy books in a laundry basket so it doesn't tip.","Stand her behind it holding the edge.","Let her push it across a rug or smooth floor."],
+   learn:"Walking steps with support she controls herself.",
+   grow:"Take the books out so it moves faster.", watch:"Weigh it down so it can't tip toward her.", kit:["Laundry basket","Heavy books"]},
+
+  // ---------------- HANDS ----------------
+  {id:"hand-off", t:"The hand-off", type:"hands", mood:["calm"], min:4, needs:["grabs"], out:"transfer", builds:["transfer"],
+   sum:"Offer a second toy to the hand that's already full",
+   how:["When she's holding a toy, offer another one to the same hand.","She has to switch hands or drop the first to take it.","Try from both sides."],
+   learn:"Passing toys from hand to hand, a big hand milestone around this age.",
+   grow:"Offer a third toy and see what she does with two full hands.", kit:["Two small toys"]},
+  {id:"treasure-basket", t:"Treasure basket", type:"hands", mood:["calm"], min:4, needs:["sitsup"], builds:["transfer","bang"],
+   sum:"A basket of big, safe, real objects to explore",
+   how:["Fill a low basket with big objects in different materials: wooden spoon, silicone spatula, metal measuring cups, soft brush, washcloth, wooden ring.","Sit her with support and let her pull things out and mouth them.","Name each thing as she picks it up.","Swap the items weekly."],
+   learn:"Real objects are more interesting to her than plastic toys: weight, cold, texture, sound.",
+   grow:"Add things that open, nest or clink together.", watch:"Every item bigger than a toilet paper roll opening.", kit:["Low basket","Kitchen objects"]},
+  {id:"bang-drum", t:"Bang bang", type:"hands", mood:["wiggly"], min:5, needs:["grabs"], out:"bang", builds:["bang"],
+   sum:"Show her how two blocks make a sound",
+   how:["Give her a block in each hand.","Bang two blocks together yourself, slowly: \u201cBang, bang!\u201d","Guide her hands together if she doesn't try."],
+   learn:"Using both hands together on purpose.",
+   grow:"Try spoon on pot, block on table, cup on cup. Every pair sounds different.", kit:["Wooden blocks"]},
+  {id:"scarf-box", t:"Scarf pull", type:"hands", mood:["calm","fussy"], min:4, needs:["grabs"], builds:["pincer"],
+   sum:"Scarves stuffed in a tissue box to pull out",
+   how:["Stuff play scarves into an empty tissue box.","Let her grab and pull them out one by one.","Play peekaboo with one when she's done."],
+   learn:"Grabbing, pulling and cause and effect.",
+   grow:"Tie scarves end to end so one pull brings out a long chain.", watch:"Put the scarves away after.", kit:["Play scarves","Empty tissue box"]},
+  {id:"sticky-wall", t:"Sticky wall", type:"hands", mood:["calm"], min:5, needs:["grabs"], builds:["pincer"],
+   sum:"Contact paper, sticky side out, to pat and peel",
+   how:["Tape a sheet of contact paper to the floor or a low wall, sticky side out.","Let her pat it and feel it grab her hands.","Stick on big things to pull off: a scarf, a cardboard shape, a paper plate."],
+   learn:"A strange new texture, and pulling with purpose.",
+   grow:"Put it on the wall so she has to reach up from sitting.", watch:"Nothing small enough to fit in her mouth.", kit:["Contact paper","Painter's tape"]},
+  {id:"muffin-tin", t:"Muffin tin surprise", type:"hands", mood:["calm"], min:7, needs:["sits"], builds:["peekaboo","pincer"],
+   sum:"Toys hidden under tennis balls in a muffin tin",
+   how:["Put a small toy in some cups of a muffin tin.","Cover every cup with a tennis ball.","Show her how to lift one and find what's underneath."],
+   learn:"Things still exist when she can't see them, and her hands can find them.",
+   grow:"Leave some cups empty so she has to search.", kit:["Muffin tin","Tennis balls"]},
+  {id:"in-the-bucket", t:"In the bucket", type:"hands", mood:["calm"], min:8, needs:["sits"], out:"release", builds:["release"],
+   sum:"Drop things into a container and hear them land",
+   how:["Give her a metal bowl and some big blocks or balls.","Drop one in yourself: clunk!","Hold her hand over the bowl and let her let go."],
+   learn:"Letting go on purpose, which is harder than grabbing.",
+   grow:"Cut a slot in a container lid so she has to aim.", kit:["Metal bowl","Big blocks"]},
+  {id:"tape-peel", t:"Tape peel", type:"hands", mood:["calm"], min:9, needs:["sits"], out:"pincer", builds:["pincer"],
+   sum:"Strips of painter's tape on a tray to pull off",
+   how:["Stick strips of painter's tape to a tray, leaving one end folded up.","Show her how to grab the end and pull.","Crumple each strip into a ball together."],
+   learn:"The thumb-and-finger pinch she'll use for everything.",
+   grow:"Fold the ends down less so she has to pick at them.", watch:"Collect every strip after. She'll try to eat them.", kit:["Painter's tape","Tray"]},
+  {id:"whats-inside", t:"What's inside?", type:"hands", mood:["calm"], min:9, needs:["sits"], builds:["peekaboo"],
+   sum:"A toy in a container with a loose lid",
+   how:["Put a toy she likes in a food container and rest the lid on loosely.","Shake it so she hears it.","Let her figure out how to get it out."],
+   learn:"Problem solving: she has to work out the lid.",
+   grow:"Wrap a toy in a scarf or paper for her to unwrap.", kit:["Food container with lid"]},
+
+  // ---------------- SENSES ----------------
+  {id:"texture-tour", t:"House texture tour", type:"senses", mood:["calm","fussy"], min:0,
+   sum:"Carry her room to room, touching everything",
+   how:["Carry her through the house and touch her hand to different surfaces.","Cool window glass, fuzzy rug, smooth fridge, leafy plant, rough brick, soft towel.","Name each one: \u201cCold. Fuzzy. Bumpy.\u201d"],
+   learn:"Every texture is new information, and she's hearing words for how things feel.",
+   grow:"Let her touch with her feet too.", kit:[]},
+  {id:"sensory-bag", t:"Squish bag", type:"senses", mood:["wiggly"], min:3, needs:["forearms"], builds:["straightarms"],
+   sum:"A sealed bag of gel taped to the floor for tummy time",
+   how:["Fill a gallon zip bag with clear hair gel and large pom-poms or foam shapes.","Squeeze out the air, double-bag it and duct-tape every edge.","Tape it flat to the floor in front of her during tummy time."],
+   learn:"Something to push and pat keeps her up on her arms longer.",
+   grow:"Make versions with water and food coloring, or oil and water.", watch:"Check for leaks every time.", kit:["Gallon zip bags","Clear hair gel","Large pom-poms","Duct tape"]},
+  {id:"smell-garden", t:"Smell garden", type:"senses", mood:["calm"], min:3,
+   sum:"Hold herbs, peels and spices near her nose",
+   how:["Gather things with strong smells: rosemary, mint, basil, lemon peel, orange peel, a cinnamon stick, vanilla on a cotton ball.","Hold one near her nose and say its name.","Watch her face. Some will surprise her."],
+   learn:"Smell is tied closely to memory. Every new smell is a new experience.",
+   grow:"Grow a small pot of herbs on the windowsill and visit it daily.", watch:"Smell only. Keep them out of her mouth.", kit:["Fresh herbs","Citrus","Cinnamon stick"]},
+  {id:"rainbows", t:"Rainbow catcher", type:"senses", mood:["calm"], min:2,
+   sum:"A prism in a sunny window throws rainbows on the wall",
+   how:["Hang a crystal prism or suncatcher in a window that gets morning sun.","Lay her where she can see the rainbows on the wall or floor.","Move the prism so the rainbows dance."],
+   learn:"Colors and tracking moving light.",
+   grow:"Let her try to touch the rainbow on the floor.", kit:["Crystal prism or suncatcher"]},
+  {id:"flashlight", t:"Flashlight show", type:"senses", mood:["calm","fussy"], min:2,
+   sum:"A beam of light dancing on the ceiling in a dim room",
+   how:["Dim the room.","Move a flashlight beam slowly across the ceiling and walls.","Put colored cellophane over it to change colors."],
+   learn:"Visual tracking. It's also one of the best ways to calm her down.",
+   grow:"Make hand shadows in the beam.", kit:["Flashlight","Colored cellophane"]},
+  {id:"breeze", t:"Breeze and ribbons", type:"senses", mood:["calm"], min:3,
+   sum:"Feel moving air and watch ribbons flutter",
+   how:["Tie a few ribbons to the grille of a fan across the room.","Turn it on low and let her watch them dance.","Carry her closer so she feels the breeze on her face."],
+   learn:"A feeling she can't see, and motion she can watch.",
+   grow:"Try it outside on a breezy day with a pinwheel.", watch:"Fan stays out of her reach.", kit:["Ribbons","Fan"]},
+  {id:"warm-cool", t:"Warm and cool", type:"senses", mood:["calm"], min:2,
+   sum:"A warm washcloth, then a cool one",
+   how:["Wet two washcloths: one warm, one cool.","Touch one to her hands and feet, then the other.","Say \u201cWarm\u201d and \u201cCool\u201d each time."],
+   learn:"Temperature is a whole sense she barely uses yet.",
+   grow:"Add a sealed bag of ice cubes to pat.", kit:["Two washcloths"]},
+  {id:"ice-bag", t:"Ice pat", type:"senses", mood:["calm","wiggly"], min:4, needs:["grabs"],
+   sum:"A sealed bag of ice cubes to pat and slide",
+   how:["Put a handful of ice cubes and a little water in a zip bag and tape it shut.","Lay it on a towel in front of her.","Let her pat it, push it around, and watch it melt."],
+   learn:"Cold, slippery and changing. Great on a hot Texas afternoon.",
+   grow:"Freeze a small toy inside a big block of ice in a bowl and let her watch it free itself in the bath.", watch:"Take it away if the bag tears.", kit:["Zip bag","Ice"]},
+  {id:"bubble-wrap", t:"Bubble wrap stomp", type:"senses", mood:["wiggly"], min:4, needs:["stands"],
+   sum:"Kick, stand and pop on bubble wrap",
+   how:["Tape a sheet of bubble wrap to the floor.","Lay her on her back with her feet on it to kick, or stand her on it holding her.","Let her feel and hear it pop."],
+   learn:"Cause and effect through her feet, which have as many nerve endings as her hands.",
+   grow:"Tape it to a tray for her to press with her hands while sitting.", watch:"Taped down, and take it away after.", kit:["Bubble wrap","Painter's tape"]},
+  {id:"calm-bottle", t:"Calm-down bottle", type:"senses", mood:["fussy","calm"], min:2,
+   sum:"A sealed bottle of water and glitter to watch swirl",
+   how:["Fill a clear plastic bottle with water, a little clear glue or baby oil, and glitter or sequins.","Glue the lid shut and tape over it.","Shake it and let her watch everything slowly fall."],
+   learn:"Focus and calm. The slow motion is soothing.",
+   grow:"Make three: glitter, beads, and colored water with oil.", watch:"Lid glued and taped. Check for leaks.", kit:["Clear plastic bottle","Glitter or sequins","Super glue"]},
+  {id:"fabric-bag", t:"Fabric feel bag", type:"senses", mood:["calm"], min:3, needs:["grabs"],
+   sum:"Scraps of different fabrics to touch and crumple",
+   how:["Collect big scraps: velvet, silk, burlap, fleece, corduroy, satin, lace.","Hand them to her one at a time and name how each feels.","Rub one gently on her cheek, arms and feet."],
+   learn:"Fine differences in texture, and the words for them.",
+   grow:"Sew them into a patchwork square she can explore on her own.", kit:["Fabric scraps"]},
+  {id:"paper-play", t:"Paper crumple", type:"senses", mood:["wiggly"], min:5, needs:["grabs"], builds:["transfer"],
+   sum:"Tissue paper and parchment to crinkle and tear",
+   how:["Give her a big sheet of tissue paper or parchment.","Crinkle it near her ear, then let her grab it.","Let her crumple and wave it."],
+   learn:"A sound she makes herself, and her hands working together.",
+   grow:"Wrap a toy in it for her to unwrap.", watch:"Take away wet or torn pieces before they go in her mouth.", kit:["Tissue paper","Parchment paper"]},
+
+  // ---------------- SOUND & MUSIC ----------------
+  {id:"world-music", t:"Music around the world", type:"sound", mood:["wiggly","calm"], min:0,
+   sum:"A different style of music every day",
+   how:["Pick a style for the day: salsa, classical, reggae, bluegrass, mariachi, jazz, West African drumming, Bollywood, Hawaiian slack key.","Play it while you play. Dance with her to the fast ones.","Rotate through the week."],
+   learn:"Different rhythms, scales and instruments. Babies' brains are tuning to sounds right now.",
+   grow:"Repeat her favorites and watch her start to bounce when she recognizes them.", kit:["Speaker"]},
+  {id:"kitchen-band", t:"Kitchen band", type:"sound", mood:["wiggly"], min:4, needs:["grabs"], builds:["bang"],
+   sum:"Pots, pans and wooden spoons",
+   how:["Put a pot, a pan and a metal bowl upside down in front of her.","Give her a wooden spoon.","Show her the different sounds, then let her play."],
+   learn:"Cause and effect, and that different things make different sounds.",
+   grow:"Play a simple beat and see if she copies it.", kit:["Pots and pans","Wooden spoon"]},
+  {id:"shaker-lab", t:"Shaker lab", type:"sound", mood:["calm","wiggly"], min:3, needs:["grabs"],
+   sum:"Homemade shakers that each sound different",
+   how:["Fill small plastic bottles with different things: rice, dry beans, jingle bells, pasta, water.","Glue every lid shut and tape over it.","Shake them one at a time near each ear and let her shake them."],
+   learn:"Listening closely and telling sounds apart.",
+   grow:"Shake one hidden behind your back and see if she turns to find it.", watch:"Lids glued and taped. Check every time.", kit:["Small plastic bottles","Rice, beans, bells","Super glue"]},
+  {id:"whisper-boom", t:"Whisper and boom", type:"sound", mood:["calm"], min:2, builds:["coos"],
+   sum:"The same song sung tiny, then big",
+   how:["Sing a song she knows in a whisper.","Sing it again in a big, silly voice.","Then a high voice, then a low one."],
+   learn:"She notices contrast, and your voice is her favorite sound.",
+   grow:"Stop mid-line and wait. See if she makes a sound to fill it.", kit:[]},
+  {id:"body-drum", t:"Body drum", type:"sound", mood:["calm","fussy"], min:0,
+   sum:"Gentle rhythms tapped on her tummy, feet and hands",
+   how:["Lay her on her back.","Tap a slow rhythm on her tummy while you sing or chant.","Move to her feet, knees, hands, then back to her tummy."],
+   learn:"Rhythm she can feel, not just hear.",
+   grow:"Do the same rhythm every time and see if she starts to anticipate it.", kit:[]},
+  {id:"live-music", t:"Live music", type:"sound", mood:["outside","calm"], min:2,
+   sum:"Hear real instruments, up close",
+   how:["Find live music: library music time, a street musician, a church choir practice, a friend with a guitar.","Get close enough for her to see the instrument being played."],
+   learn:"Real instruments carry sounds recordings lose, and she can see where the sound comes from.",
+   grow:"A small ukulele or xylophone at home she can strum and bang.", kit:[]},
+  {id:"her-song", t:"Her song", type:"sound", mood:["calm","fussy"], min:0,
+   sum:"The same wake-up song every time she wakes",
+   how:["Pick one cheerful song for when she wakes up.","Sing it every single time she wakes from a nap.","Keep it just for waking."],
+   learn:"Predictability. She'll start smiling at the first line.",
+   grow:"Add actions she can copy.", kit:[]},
+
+  // ---------------- WORDS & BOOKS ----------------
+  {id:"babble-back", t:"Babble back", type:"words", mood:["calm"], min:0, builds:["babbles","words"],
+   sum:"Copy her sounds, then wait for her answer",
+   how:["When she coos or babbles, copy the sound back to her.","Then stop and wait for her to answer. Count to five in your head.","Keep the back-and-forth going as long as she wants."],
+   learn:"The single best language activity at this age. She learns that talking is a conversation.",
+   grow:"Once she answers, change the sound slightly and see if she copies you.", kit:[]},
+  {id:"sportscaster", t:"Sportscaster", type:"words", mood:["calm","wiggly"], min:0, builds:["words"],
+   sum:"Narrate everything like a play-by-play announcer",
+   how:["Describe what you're doing and what she's doing, all day.","\u201cAnd she reaches for the blue ring. She's got it!\u201d","Big voice, lots of expression."],
+   learn:"How many words she hears now shapes how many she'll know later.",
+   grow:"Narrate what she's looking at, not just what you're doing.", kit:[]},
+  {id:"books-daily", t:"Book time", type:"words", mood:["calm"], min:0, builds:["point","words"],
+   sum:"Three or more books a day on your lap",
+   how:["Sit her on your lap with a board book.","Point at pictures and name them. You don't have to read every word.","Let her grab, turn and chew the pages."],
+   learn:"Vocabulary, and the feeling that books are warm and fun.",
+   grow:"Ask \u201cWhere's the dog?\u201d and wait before pointing.", kit:["Board books"]},
+  {id:"photo-book", t:"Family photo book", type:"words", mood:["calm","fussy"], min:3, builds:["words"],
+   sum:"A small album of people and pets she knows",
+   how:["Print photos of family, pets, her own face and familiar places.","Slip them into a small plastic photo album.","Name each person and tell a tiny story about them."],
+   learn:"Faces are her favorite thing to look at, and these are her people.",
+   grow:"Show it before a family video call so she connects faces to voices.", kit:["Small photo album","Printed photos"]},
+  {id:"touch-books", t:"Touch-and-feel books", type:"words", mood:["calm"], min:3, needs:["grabs"],
+   sum:"Books with fuzzy, bumpy, shiny patches",
+   how:["Guide her hand to each texture.","Say the word for how it feels: soft, rough, bumpy.","Let her go back to her favorite page."],
+   learn:"Connects words to feelings in her fingers.",
+   grow:"Make your own with cardboard pages and fabric scraps.", kit:["Touch-and-feel books"]},
+  {id:"peekaboo", t:"Peekaboo", type:"words", mood:["calm","fussy"], min:3, out:"peekaboo", builds:["peekaboo"],
+   sum:"The classic, with hands, a scarf or a door",
+   how:["Hide your face behind your hands or a scarf.","Pop out with a big smile: \u201cPeekaboo!\u201d","Try hiding a toy under a scarf and pulling it away."],
+   learn:"Things still exist when she can't see them, a big idea for a baby.",
+   grow:"Leave a bit of the toy sticking out and let her pull the scarf off herself.", kit:["Scarf"]},
+  {id:"sock-puppet", t:"Sock puppet friend", type:"words", mood:["calm","fussy"], min:2,
+   sum:"A homemade puppet that talks and sings to her",
+   how:["Draw a face on a clean sock with marker.","Give it a voice and a name.","Have it say hello, sing, and kiss her toes."],
+   learn:"A second \u201cperson\u201d to talk to makes conversation a game.",
+   grow:"Have the puppet hide and ask her where it went.", watch:"No buttons or glued-on eyes.", kit:["Clean sock","Marker"]},
+  {id:"copy-face", t:"Copy my face", type:"words", mood:["calm"], min:0, builds:["coos"],
+   sum:"Make a face and wait for her to try",
+   how:["Face to face, about a foot away.","Stick out your tongue, open your mouth wide, or make an \u201coo\u201d face.","Wait a good five seconds for her to try it back."],
+   learn:"Copying is how babies learn almost everything.",
+   grow:"Copy her faces back to her.", kit:[]},
+  {id:"wave-bye", t:"Hi and bye", type:"words", mood:["calm","outside"], min:6, out:"waves", builds:["waves"],
+   sum:"Wave hello and goodbye to everything",
+   how:["Wave and say \u201cHi!\u201d to people, pets, cars and toys.","Wave \u201cBye-bye!\u201d when they leave.","Gently wave her hand with yours."],
+   learn:"Her first gestures, which come before her first words.",
+   grow:"Add clapping for \u201cyay\u201d and arms up for \u201cso big.\u201d", kit:[]},
+
+  // ---------------- OUT IN THE WORLD ----------------
+  {id:"texture-walk", t:"Texture walk", type:"world", mood:["outside","calm"], min:0,
+   sum:"A stroller walk with stops to touch things",
+   how:["Go early, before the heat.","Stop in the shade to let her touch leaves, tree bark and flowers.","Take off her socks and put her feet on cool grass.","Talk about everything you see and hear."],
+   learn:"The outside world is full of textures, sounds and light she can't get at home.",
+   grow:"Pick a different route each day of the week.", watch:"Never drape a blanket over the stroller in heat.", kit:["Stroller fan","Mesh sun shade"]},
+  {id:"produce-safari", t:"Produce safari", type:"world", mood:["outside","calm"], min:3,
+   sum:"The grocery produce section as a sensory museum",
+   how:["Walk slowly through produce with her in a carrier or cart.","Hold a cold cucumber to her hand, a lemon to her nose, a bumpy avocado for her to pat.","Name colors and shapes."],
+   learn:"Colors, smells, cold, bumpy and smooth, all in one aisle.",
+   grow:"Buy one new fruit a week and let her smell and touch it at home.", kit:["Baby carrier"]},
+  {id:"cool-walks", t:"Air-conditioned walks", type:"world", mood:["outside"], min:0,
+   sum:"Stroll a big store when it's too hot outside",
+   how:["Go to a garden center, hardware store, bookstore or big store.","Walk slowly and stop at anything interesting: fountains, wind chimes, plants, colors.","Narrate as you go."],
+   learn:"New sights and sounds, without the heat.",
+   grow:"Visit the same place weekly and see what she recognizes.", kit:["Stroller or carrier"]},
+  {id:"library", t:"Library storytime", type:"world", mood:["outside","calm"], min:0,
+   sum:"Baby storytime with songs, rhymes and other babies",
+   how:["Check the local library calendar for baby storytime.","Plan her nap so she's awake for it.","Sit near the front so she can see the reader."],
+   learn:"Songs, rhymes and being around other babies.",
+   grow:"Check out new board books every visit.", kit:[]},
+  {id:"bird-feeder", t:"Window bird feeder", type:"world", mood:["calm"], min:2,
+   sum:"Birds up close through the window",
+   how:["Stick a suction-cup bird feeder on a window she can see from the floor or her chair.","Fill it with seed and give the birds a few days to find it.","Watch together and name what you see."],
+   learn:"Watching living things move, and waiting for something to happen.",
+   grow:"Make the bird sounds and see if she copies you.", kit:["Suction-cup window bird feeder","Birdseed"]},
+  {id:"car-wash", t:"Car wash ride", type:"world", mood:["outside","wiggly"], min:5,
+   sum:"A drive-through car wash with her in her car seat",
+   how:["Go through an automatic car wash.","Narrate the foam, the brushes and the loud whoosh.","Watch her face. Some babies love it and some don't."],
+   learn:"Big sounds, bright colors and something totally unexpected.",
+   grow:"If she liked it, do it again in a month. She may remember.", watch:"If she's scared, comfort her. It's fine to skip it.", kit:[]},
+  {id:"splash-pad", t:"Fountain visit", type:"world", mood:["outside"], min:3,
+   sum:"Watch and hear moving water at a fountain or splash pad",
+   how:["Find a fountain or splash pad on a cool morning.","Hold her close enough to see and hear it.","Let her touch the water spray if she's interested."],
+   learn:"Moving water is endlessly fascinating to babies.",
+   grow:"Once she sits well, let her sit in the shallow edge.", watch:"Morning only. Shade and water between plays.", kit:[]},
+  {id:"swing", t:"Park swing", type:"world", mood:["outside","wiggly"], min:5, needs:["head","sitsup"],
+   sum:"The bucket swing at the park",
+   how:["Use the baby bucket swing only.","Push very gently, standing in front so she sees you.","Say \u201cWhee!\u201d on every swing forward."],
+   learn:"Motion and balance. Swinging helps develop the inner ear.",
+   grow:"Swing a little higher as she gets steadier.", watch:"Bucket swing only, and check the seat isn't hot.", kit:[]},
+
+  // ---------------- PEOPLE & ANIMALS ----------------
+  {id:"meet-dog", t:"Meet a gentle dog", type:"people", mood:["outside","calm"], min:3,
+   sum:"Watch, then touch, a calm dog",
+   how:["Only a calm dog whose owner says it's good with babies.","Let her watch the dog first.","Then hold her hand and let her touch its back."],
+   learn:"Animals are exciting and a little strange: fur, breath, movement.",
+   grow:"Visit the same dog more than once so she gets to know it.", watch:"Wash her hands after.", kit:[]},
+  {id:"baby-friend", t:"Baby friend", type:"people", mood:["calm"], min:3,
+   sum:"Side-by-side time with another baby",
+   how:["Put both babies on a blanket on their tummies or backs.","Let them look at each other.","Give them the same kind of toy each."],
+   learn:"Babies are fascinated by other babies' faces and sounds.",
+   grow:"Meet the same baby weekly.", kit:["Blanket"]},
+  {id:"video-family", t:"Family video call", type:"people", mood:["calm"], min:2,
+   sum:"A video call with a grandparent or relative",
+   how:["Hold the phone at her eye level.","Let the person sing to her or play peekaboo.","Keep it short and happy."],
+   learn:"Video chat is the one screen use that counts as real interaction for babies.",
+   grow:"Look at their photo in the photo book first.", kit:[]},
+  {id:"hello-tour", t:"Hello tour", type:"people", mood:["outside"], min:0,
+   sum:"Say hi to neighbors, the mail carrier, anyone friendly",
+   how:["On a walk, stop to say hello to friendly neighbors.","Let them talk to her.","Point out who they are: \u201cThat's the mail carrier.\u201d"],
+   learn:"New faces and voices, and watching how people talk to each other.",
+   grow:"Wave to the same people every day.", kit:[]},
+  {id:"fish-watch", t:"Fish watching", type:"people", mood:["outside","calm"], min:3,
+   sum:"Aquarium tanks at a pet store",
+   how:["Visit a pet store with fish tanks.","Hold her up close to the glass.","Point to fish as they swim by."],
+   learn:"Bright colors and slow movement are perfect for her eyes.",
+   grow:"Look at birds, bunnies and lizards too.", kit:[]},
+
+  // ---------------- WATER ----------------
+  {id:"water-mat", t:"Water mat", type:"water", mood:["wiggly"], min:2, needs:["forearms"], builds:["straightarms"],
+   sum:"An inflatable mat with water and floating toys for tummy time",
+   how:["Fill the mat and let her lie on her tummy facing it.","Push the floating shapes around so she watches.","Let her pat and push it."],
+   learn:"A reason to stay up on her arms.",
+   grow:"Put it on its side so she reaches up while sitting.", kit:["Tummy-time water mat"]},
+  {id:"splash-tray", t:"Splash tray", type:"water", mood:["wiggly"], min:4, needs:["forearms"],
+   sum:"An inch of water in a tray in front of her",
+   how:["Put an inch of lukewarm water in a baking tray on a towel.","Let her pat and splash on her tummy or sitting with support.","Float a cup or a ball in it."],
+   learn:"Water is one of the richest sensory experiences there is.",
+   grow:"Add ice cubes, or a few drops of food coloring.", watch:"Within arm's reach every second.", kit:["Baking tray","Towel"]},
+  {id:"rain-cup", t:"Rain cup", type:"water", mood:["calm"], min:3,
+   sum:"Water pouring through holes onto her hands",
+   how:["Poke holes in the bottom of a yogurt cup.","In the bath, fill it and hold it over her hands and tummy.","Let the rain fall and say \u201cRain!\u201d"],
+   learn:"A new feeling and watching water fall.",
+   grow:"Give her the cup to fill and dump herself.", watch:"Never leave her in the bath, not for a second.", kit:["Yogurt cup"]},
+  {id:"sponge-squeeze", t:"Sponge squeeze", type:"water", mood:["calm"], min:5, needs:["grabs"],
+   sum:"Soak a sponge and squeeze it together",
+   how:["In the bath or at the splash tray, give her a big soft sponge.","Squeeze it over her hand so she feels the water run.","Let her grab and squeeze it."],
+   learn:"Hand strength and cause and effect.",
+   grow:"Cut sponges into big shapes.", kit:["Big soft sponges"]},
+  {id:"kiddie-pool", t:"Kiddie pool", type:"water", mood:["outside","wiggly"], min:6, needs:["sits"],
+   sum:"A few inches of water in full shade",
+   how:["Put a few inches of water in a small pool in full shade, and let it warm up.","Sit with her in it or hold her sitting.","Add cups and floating toys."],
+   learn:"Water all around her, kicking and splashing on her own.",
+   grow:"Add a watering can to pour.", watch:"Hands on her every second. Empty the pool after.", kit:["Small kiddie pool"]}
+];
+
+const FIRSTS = [
+  {g:"Touched", items:["Grass","Tree bark","A leaf","Sand","A flower","Ice","A feather","Dog fur","A pinecone","Wet sand","Mud","Rain on her skin"]},
+  {g:"Smelled", items:["Rosemary","Lemon","Cinnamon","A flower","Fresh bread","Rain","Pine","Coffee"]},
+  {g:"Heard", items:["Rain","Thunder","Birdsong","A live musician","A drum","Wind chimes","Water waves","A big truck","A choir","Other babies"]},
+  {g:"Saw", items:["A rainbow","Fish swimming","A bird up close","A butterfly","Bubbles","Her reflection","The moon","A squirrel"]},
+  {g:"Went to", items:["The library","The grocery store","A park","A garden center","A fountain or splash pad","A car wash","A friend's house","A pet store","A farmers market","The lake"]},
+  {g:"Met", items:["A dog","A cat","A horse or farm animal","Another baby","A grandparent","A big kid"]},
+  {g:"Felt", items:["A park swing","Wind outside","A pool","Bare feet on grass","Snow"]}
+];
+
+/* ============================ APP ============================ */
+const KEY = "babyworld:v1";
+const DEFAULT_ANCHORS = ["babble-back","books-daily","her-song"];
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
+const today = () => { const d = new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); };
+const prettyDate = s => { if(!s) return ""; const [y,m,d] = s.split("-").map(Number); return new Date(y,m-1,d).toLocaleDateString([], {month:"short", day:"numeric"}); };
+const byId = Object.fromEntries(IDEAS.map(i => [i.id, i]));
+const skillName = Object.fromEntries(SKILLS.flatMap(g => g.items));
+
+let S = load();
+function load(){
+  let s = null;
+  try { s = JSON.parse(localStorage.getItem(KEY) || "null"); } catch(e) {}
+  s = s || {};
+  s.name = s.name || ""; s.birth = s.birth || ""; s.skills = s.skills || [];
+  s.anchors = Array.isArray(s.anchors) ? s.anchors : DEFAULT_ANCHORS.slice();
+  s.done = s.done || {}; s.tried = s.tried || {}; s.firsts = s.firsts || {}; s.custom = s.custom || [];
+  return s;
+}
+function save(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e) {} }
+function toast(msg){ const t = $("#toast"); t.textContent = msg; t.classList.add("on"); clearTimeout(toast.h); toast.h = setTimeout(() => t.classList.remove("on"), 2200); }
+async function copy(text, okMsg){
+  try { await navigator.clipboard.writeText(text); toast(okMsg); }
+  catch(e){ window.prompt("Copy this:", text); }
+}
+
+/* ---------- setup link import ---------- */
+(function importSetup(){
+  const h = location.hash;
+  if (!h.startsWith("#setup=")) return;
+  try {
+    const json = decodeURIComponent(escape(atob(decodeURIComponent(h.slice(7)))));
+    const d = JSON.parse(json);
+    if (d.name !== undefined) S.name = d.name;
+    if (d.birth !== undefined) S.birth = d.birth;
+    if (Array.isArray(d.skills)) S.skills = d.skills;
+    if (Array.isArray(d.anchors)) S.anchors = d.anchors;
+    save();
+    history.replaceState(null, "", location.pathname + location.search + "#today");
+    setTimeout(() => toast("Setup loaded"), 300);
+  } catch(e) { setTimeout(() => toast("That setup link didn't work. Ask for a new one."), 300); }
+})();
+function setupLink(){
+  const d = { name:S.name, birth:S.birth, skills:S.skills, anchors:S.anchors };
+  const enc = encodeURIComponent(btoa(unescape(encodeURIComponent(JSON.stringify(d)))));
+  return location.origin + location.pathname + "#setup=" + enc;
+}
+
+/* ---------- age & readiness ---------- */
+function ageMonths(){
+  if (!S.birth) return null;
+  const [y,m,d] = S.birth.split("-").map(Number);
+  const b = new Date(y,m-1,d), now = new Date();
+  if (isNaN(b)) return null;
+  return (now - b) / (30.44 * 864e5);
+}
+function ageLabel(){
+  const a = ageMonths(); if (a === null || a < 0) return "";
+  const m = Math.floor(a), w = Math.floor((a - m) * 30.44 / 7);
+  if (m === 0) return w + (w === 1 ? " week" : " weeks") + " old";
+  return m + (m === 1 ? " month" : " months") + (w ? ", " + w + (w === 1 ? " week" : " weeks") : "") + " old";
+}
+function status(i){
+  const has = new Set(S.skills), age = ageMonths();
+  if (i.out && has.has(i.out)) return "outgrown";
+  if ((i.needs || []).some(n => !has.has(n))) return "later";
+  if (age !== null && i.min && age < i.min - 0.5) return "later";
+  return "ready";
+}
+const who = () => S.name || "Baby";
+
+/* ---------- header ---------- */
+function renderHeader(){
+  const t = who() + "'s World";
+  $("#title").textContent = t; document.title = t;
+  $("#age").textContent = ageLabel();
+}
+
+/* ---------- today ---------- */
+let mood = "wiggly", seed = 0;
+function renderMoods(){
+  const box = $("#moods"); box.innerHTML = "";
+  Object.entries(MOODS).forEach(([k,v]) => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "mood"; b.setAttribute("aria-pressed", String(mood === k));
+    b.innerHTML = esc(v.n) + "<small>" + esc(v.d) + "</small>";
+    b.addEventListener("click", () => { mood = k; seed = 0; renderMoods(); renderPicks(); });
+    box.appendChild(b);
+  });
+}
+function shuffled(arr, s){
+  const a = arr.slice(); let x = (s + 1) * 9301 + new Date().getDate() * 49297;
+  for (let i = a.length - 1; i > 0; i--){ x = (x * 9301 + 49297) % 233280; const j = Math.floor(x / 233280 * (i + 1)); [a[i],a[j]] = [a[j],a[i]]; }
+  return a;
+}
+function renderPicks(){
+  const pool = IDEAS.filter(i => i.mood.includes(mood) && status(i) === "ready");
+  const fav = shuffled(pool.filter(i => S.anchors.includes(i.id)), seed);
+  const fresh = shuffled(pool.filter(i => !S.anchors.includes(i.id) && !S.tried[i.id]), seed);
+  const rest = shuffled(pool.filter(i => !S.anchors.includes(i.id) && S.tried[i.id]), seed);
+  const picks = [...fav.slice(0,1), ...fresh, ...rest].slice(0,3);
+  const list = $("#pickList"); list.innerHTML = "";
+  if (!picks.length){ list.innerHTML = '<div class="pick-item">Nothing for this yet. Try another mood.</div>'; return; }
+  picks.forEach(i => {
+    const a = document.createElement("a"); a.className = "pick-item"; a.href = "#ideas/" + i.id;
+    const tag = S.anchors.includes(i.id) ? '<span class="fav">Favorite</span>' : (!S.tried[i.id] ? '<span class="fav">New</span>' : "");
+    a.innerHTML = tag + esc(i.t) + "<small>" + esc(i.sum) + "</small>";
+    list.appendChild(a);
+  });
+}
+function renderAnchors(){
+  const ul = $("#anchors"); ul.innerHTML = "";
+  const doneToday = new Set(S.done[today()] || []);
+  const items = S.anchors.map(id => byId[id]).filter(Boolean);
+  if (!items.length){ ul.outerHTML = '<div class="empty" id="anchors">Tap "Everyday favorite" on any idea to add it here.</div>'; return; }
+  if (ul.tagName !== "UL"){ const n = document.createElement("ul"); n.className = "checks"; n.id = "anchors"; ul.replaceWith(n); return renderAnchors(); }
+  items.forEach(i => {
+    const li = document.createElement("li");
+    li.innerHTML = '<label><input type="checkbox"' + (doneToday.has(i.id) ? " checked" : "") + '><span>' + esc(i.t) + '</span></label><a href="#ideas/' + i.id + '">How</a>';
+    li.querySelector("input").addEventListener("change", e => { markDone(i.id, e.target.checked); });
+    ul.appendChild(li);
+  });
+}
+function markDone(id, on){
+  const d = today(); const set = new Set(S.done[d] || []);
+  on ? set.add(id) : set.delete(id);
+  S.done = { [d]: [...set] };            // keep only today's ticks
+  if (on && !S.tried[id]) S.tried[id] = d;
+  save();
+}
+function nextSkills(){
+  const has = new Set(S.skills), out = [];
+  SKILLS.forEach(g => {
+    const need = g.items.filter(([k]) => !has.has(k)).slice(0, g.g === "Moving" ? 2 : 1);
+    need.forEach(([k,label]) => out.push([k,label]));
+  });
+  return out;
+}
+function renderFocus(){
+  const box = $("#focus"); box.innerHTML = "";
+  const ns = nextSkills().map(([k,l]) => [k,l,IDEAS.filter(i => (i.builds||[]).includes(k) && status(i) === "ready").length]).filter(x => x[2] > 0);
+  if (!ns.length){ box.innerHTML = '<div class="empty">Tick what she can do on the Baby tab to see what she\'s working on next.</div>'; return; }
+  ns.forEach(([k,l,n]) => {
+    const a = document.createElement("a"); a.href = "#ideas/skill:" + k;
+    a.innerHTML = esc(l) + "<span>" + n + (n === 1 ? " idea" : " ideas") + "</span>";
+    box.appendChild(a);
+  });
+}
+function renderFirstNudge(){
+  const open = FIRSTS.flatMap(g => g.items.map(it => [g.g, it])).filter(([g,it]) => !S.firsts[g + ":" + it]);
+  const box = $("#firstNudge");
+  if (!open.length){ box.innerHTML = '<div class="empty">Every first on the list is collected. Add your own on the Firsts tab.</div>'; return; }
+  const [g,it] = shuffled(open, 3)[0];
+  box.innerHTML = '<a class="skill-focus" style="display:block" href="#firsts"><span class="card" style="display:flex;justify-content:space-between;margin:0;font-weight:800">' + esc(g) + " " + esc(it.charAt(0).toLowerCase() + it.slice(1)) + '<span class="muted small">Firsts</span></span></a>';
+}
+function renderSetupNudge(){
+  const box = $("#setupNudge");
+  if (S.name && (S.birth || S.skills.length)){ box.innerHTML = ""; return; }
+  box.innerHTML = '<a class="banner" href="#baby" style="text-decoration:none;margin:0 0 12px">Set up her name, birthday and skills<span>Baby tab</span></a>';
+}
+
+/* ---------- ideas ---------- */
+let typeFilter = "all", skillFilter = null;
+function renderTypeChips(){
+  const box = $("#typeChips"); box.innerHTML = "";
+  [["all","All"], ...Object.entries(TYPES).map(([k,v]) => [k,v.n])].forEach(([k,l]) => {
+    const b = document.createElement("button"); b.type = "button"; b.className = "chip"; b.textContent = l;
+    b.setAttribute("aria-pressed", String(typeFilter === k));
+    b.addEventListener("click", () => { typeFilter = k; renderTypeChips(); renderIdeas(); });
+    box.appendChild(b);
+  });
+}
+function ideaEl(i){
+  const st = status(i);
+  const d = document.createElement("details"); d.className = "idea t-" + i.type; d.id = "idea-" + i.id;
+  const badges = ['<span class="badge">' + esc(TYPES[i.type].n) + '</span>'];
+  if (S.anchors.includes(i.id)) badges.push('<span class="badge star">Favorite</span>');
+  if (S.tried[i.id]) badges.push('<span class="badge tried">Tried ' + esc(prettyDate(S.tried[i.id])) + '</span>');
+  else if (st === "ready") badges.push('<span class="badge new">New</span>');
+  if (st === "later"){
+    const miss = (i.needs||[]).filter(n => !S.skills.includes(n)).map(n => skillName[n]);
+    badges.push('<span class="badge later">' + esc(miss.length ? "Later: " + miss[0].toLowerCase() : "Later: around " + i.min + " months") + '</span>');
+  }
+  if (st === "outgrown") badges.push('<span class="badge later">Outgrown</span>');
+  let body = '<ol>' + i.how.map(s => '<li>' + esc(s) + '</li>').join("") + '</ol>';
+  if (i.learn) body += '<div class="kv"><b>What she\'s learning</b>' + esc(i.learn) + '</div>';
+  if (i.grow) body += '<div class="kv"><b>Next level</b>' + esc(i.grow) + '</div>';
+  if (i.watch) body += '<div class="kv watch"><b>Watch</b>' + esc(i.watch) + '</div>';
+  if (i.kit && i.kit.length) body += '<div class="kv"><b>You\'ll need</b>' + esc(i.kit.join(", ")) + '</div>';
+  const doneToday = (S.done[today()] || []).includes(i.id);
+  body += '<div class="actions"><button type="button" class="primary" data-act="done">' + (doneToday ? "Done today \u2713" : "We did it today") + '</button>' +
+          '<button type="button" data-act="fav" aria-pressed="' + S.anchors.includes(i.id) + '">' + (S.anchors.includes(i.id) ? "Everyday favorite \u2605" : "Everyday favorite") + '</button></div>';
+  d.innerHTML = '<summary>' + esc(i.t) + '<span class="sum">' + esc(i.sum) + '</span><span class="badges">' + badges.join("") + '</span></summary><div class="body">' + body + '</div>';
+  d.querySelector('[data-act="done"]').addEventListener("click", e => {
+    const on = !(S.done[today()] || []).includes(i.id); markDone(i.id, on);
+    toast(on ? "Nice. Logged for today." : "Unmarked"); refreshIdea(i.id, true);
+  });
+  d.querySelector('[data-act="fav"]').addEventListener("click", () => {
+    const k = S.anchors.indexOf(i.id);
+    if (k >= 0) S.anchors.splice(k,1); else S.anchors.push(i.id);
+    save(); toast(k >= 0 ? "Removed from everyday favorites" : "Added to everyday favorites"); refreshIdea(i.id, true);
+  });
+  return d;
+}
+function refreshIdea(id, keepOpen){
+  const old = document.getElementById("idea-" + id); if (!old) return;
+  const n = ideaEl(byId[id]); if (keepOpen) n.open = true; old.replaceWith(n);
+}
+function renderIdeas(){
+  const q = $("#q").value.trim().toLowerCase(), all = $("#showAll").checked;
+  const sb = $("#skillBanner");
+  if (skillFilter){
+    sb.innerHTML = '<div class="banner">Working on: ' + esc(skillName[skillFilter] || skillFilter) + '<button type="button" class="linkbtn" id="clearSkill">Clear</button></div>';
+    $("#clearSkill").addEventListener("click", () => { skillFilter = null; location.hash = "#ideas"; });
+  } else sb.innerHTML = "";
+  const order = {ready:0, later:1, outgrown:2};
+  let list = IDEAS.filter(i =>
+    (typeFilter === "all" || i.type === typeFilter) &&
+    (!skillFilter || (i.builds||[]).includes(skillFilter)) &&
+    (all || status(i) === "ready") &&
+    (!q || (i.t + " " + i.sum + " " + i.how.join(" ") + " " + (i.kit||[]).join(" ")).toLowerCase().includes(q))
+  );
+  list.sort((a,b) => order[status(a)] - order[status(b)] || (!!S.tried[a.id]) - (!!S.tried[b.id]));
+  $("#ideaCount").textContent = list.length + (list.length === 1 ? " idea" : " ideas") + (all ? "" : " she's ready for");
+  const box = $("#ideaList"); box.innerHTML = "";
+  if (!list.length){ box.innerHTML = '<div class="empty">No matches. Clear the search or turn on "Also show ideas for later."</div>'; return; }
+  list.forEach(i => box.appendChild(ideaEl(i)));
+}
+function openIdea(id){
+  let el = document.getElementById("idea-" + id);
+  if (!el){ typeFilter = "all"; skillFilter = null; $("#q").value = ""; if (status(byId[id]) !== "ready") $("#showAll").checked = true; renderTypeChips(); renderIdeas(); el = document.getElementById("idea-" + id); }
+  if (!el) return;
+  el.open = true;
+  const rm = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  el.scrollIntoView({ behavior: rm ? "auto" : "smooth", block: "start" });
+  el.classList.add("flash"); setTimeout(() => el.classList.remove("flash"), 1500);
+}
+
+/* ---------- firsts ---------- */
+function renderFirsts(){
+  const total = FIRSTS.reduce((n,g) => n + g.items.length, 0);
+  const got = FIRSTS.reduce((n,g) => n + g.items.filter(it => S.firsts[g.g + ":" + it]).length, 0);
+  $("#firstCount").textContent = (got + S.custom.length) + " firsts collected" + " (" + got + " of " + total + " on the list)";
+  $("#firstMeter").style.width = (got / total * 100) + "%";
+  const box = $("#firstGroups"); box.innerHTML = "";
+  FIRSTS.forEach(g => {
+    const h = document.createElement("h3"); h.textContent = g.g; box.appendChild(h);
+    const wrap = document.createElement("div"); wrap.className = "firsts";
+    g.items.forEach(it => {
+      const k = g.g + ":" + it, when = S.firsts[k];
+      const b = document.createElement("button"); b.type = "button"; b.className = "first" + (when ? " got" : "");
+      b.innerHTML = esc(it) + (when ? "<small>" + esc(prettyDate(when)) + "</small>" : "");
+      b.setAttribute("aria-pressed", String(!!when));
+      b.addEventListener("click", () => {
+        if (when){ if (!confirm("Remove \u201c" + it + "\u201d from her firsts?")) return; delete S.firsts[k]; }
+        else { S.firsts[k] = today(); toast("First logged: " + it); }
+        save(); renderFirsts();
+      });
+      wrap.appendChild(b);
+    });
+    box.appendChild(wrap);
+  });
+  const cl = $("#customList"); cl.innerHTML = "";
+  S.custom.forEach((c, idx) => {
+    const b = document.createElement("button"); b.type = "button"; b.className = "first got";
+    b.innerHTML = esc(c.label) + "<small>" + esc(prettyDate(c.date)) + "</small>";
+    b.addEventListener("click", () => { if (confirm("Remove \u201c" + c.label + "\u201d?")){ S.custom.splice(idx,1); save(); renderFirsts(); } });
+    cl.appendChild(b);
+  });
+}
+$("#addFirst").addEventListener("click", () => {
+  const v = $("#customFirst").value.trim(); if (!v) return;
+  S.custom.push({ label:v, date:today() }); $("#customFirst").value = ""; save(); renderFirsts(); toast("First logged");
+});
+$("#customFirst").addEventListener("keydown", e => { if (e.key === "Enter") $("#addFirst").click(); });
+$("#copyLog").addEventListener("click", () => {
+  const lines = [who() + "'s firsts"];
+  FIRSTS.forEach(g => g.items.forEach(it => { const d = S.firsts[g.g + ":" + it]; if (d) lines.push(prettyDate(d) + ": " + g.g + " " + it.charAt(0).toLowerCase() + it.slice(1)); }));
+  S.custom.forEach(c => lines.push(prettyDate(c.date) + ": " + c.label));
+  const tried = Object.entries(S.tried).filter(([id]) => byId[id]).sort((a,b) => a[1] < b[1] ? -1 : 1);
+  if (tried.length){ lines.push("", "Activities tried"); tried.forEach(([id,d]) => lines.push(prettyDate(d) + ": " + byId[id].t)); }
+  copy(lines.join("\n"), "Copied. Paste it in a text.");
+});
+
+/* ---------- baby ---------- */
+function renderBaby(){
+  $("#name").value = S.name; $("#birth").value = S.birth;
+  const box = $("#skillGroups"); box.innerHTML = "";
+  SKILLS.forEach(g => {
+    const h = document.createElement("h3"); h.textContent = g.g; box.appendChild(h);
+    const ul = document.createElement("ul"); ul.className = "checks";
+    g.items.forEach(([k,l]) => {
+      const li = document.createElement("li");
+      li.innerHTML = '<label><input type="checkbox"' + (S.skills.includes(k) ? " checked" : "") + '><span></span></label>';
+      li.querySelector("span").textContent = l;
+      li.querySelector("span").style.textDecoration = "none";
+      li.querySelector("input").addEventListener("change", e => {
+        const set = new Set(S.skills); e.target.checked ? set.add(k) : set.delete(k); S.skills = [...set]; save();
+        if (e.target.checked) toast("Nice! Ideas updated."); renderKit();
+      });
+      ul.appendChild(li);
+    });
+    box.appendChild(ul);
+  });
+  renderKit();
+  $("#version").textContent = VERSION;
+}
+function renderKit(){
+  const items = new Set();
+  IDEAS.filter(i => status(i) === "ready").forEach(i => (i.kit||[]).forEach(k => items.add(k)));
+  $("#kit").innerHTML = [...items].sort().map(k => "<li>" + esc(k) + "</li>").join("");
+}
+$("#name").addEventListener("input", e => { S.name = e.target.value.trim(); save(); renderHeader(); });
+$("#birth").addEventListener("change", e => { S.birth = e.target.value; save(); renderHeader(); renderKit(); });
+$("#copySetup").addEventListener("click", () => copy(setupLink(), "Setup link copied. Text it to the caregiver."));
+$("#reset").addEventListener("click", () => {
+  if (!confirm("Erase the name, skills, favorites and every first logged on this phone?")) return;
+  try { localStorage.removeItem(KEY); } catch(e) {}
+  S = load(); renderAll(); toast("Erased");
+});
+$("#shuffle").addEventListener("click", () => { seed++; renderPicks(); });
+$("#q").addEventListener("input", renderIdeas);
+$("#showAll").addEventListener("change", renderIdeas);
+
+/* ---------- routing ---------- */
+function route(){
+  const h = (location.hash || "#today").slice(1);
+  const [view, sub] = h.split("/");
+  const v = ["today","ideas","firsts","baby"].includes(view) ? view : "today";
+  document.querySelectorAll("section.view").forEach(s => s.classList.toggle("on", s.dataset.view === v));
+  document.querySelectorAll("nav.tabs a").forEach(a => { if (a.dataset.tab === v) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current"); });
+  if (v === "today"){ renderSetupNudge(); renderPicks(); renderAnchors(); renderFocus(); renderFirstNudge(); window.scrollTo(0,0); }
+  if (v === "ideas"){
+    if (sub && sub.startsWith("skill:")){ skillFilter = sub.slice(6); typeFilter = "all"; renderTypeChips(); renderIdeas(); window.scrollTo(0,0); }
+    else if (sub){ renderIdeas(); setTimeout(() => openIdea(sub), 30); }
+    else { skillFilter = null; renderIdeas(); window.scrollTo(0,0); }
+  }
+  if (v === "firsts"){ renderFirsts(); window.scrollTo(0,0); }
+  if (v === "baby"){ renderBaby(); window.scrollTo(0,0); }
+}
+function renderAll(){ renderHeader(); renderMoods(); renderTypeChips(); route(); }
+window.addEventListener("hashchange", route);
+document.addEventListener("visibilitychange", () => { if (!document.hidden){ renderHeader(); route(); } });
+renderAll();
+</script>
+</body>
+</html>
